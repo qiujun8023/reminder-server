@@ -3,7 +3,6 @@
 const config = require('config')
 const shimmer = require('shimmer')
 const ZSchema = require('z-schema')
-const debug = require('debug')('shard')
 
 const errors = require('../lib/errors')
 const logger = require('../lib/logger')
@@ -45,7 +44,6 @@ module.exports = {
               if (!valid) {
                 let validateResult = validator.getLastErrors()
                 if (config.env === 'test') {
-                  debug('original response', arguments[0])
                   throw new errors.SystemError(JSON.stringify(validateResult, null, '  '), 'InvalidResponse')
                 } else {
                   logger.error('invalid response format', {

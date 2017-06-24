@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "shard",
+      "name": "birthday",
       "script": "server/app.js",
       "env": {
         "NODE_ENV": "production",
@@ -15,11 +15,11 @@
       "watch": false,
       "merge_logs": true,
       "autorestart": true,
-      "error_file": "/tmp/shard.stderr.log",
-      "out_file": "/tmp/shard.stdout.log"
+      "error_file": "/tmp/birthday.stderr.log",
+      "out_file": "/tmp/birthday.stdout.log"
     },
     {
-      "name": "shard-cron",
+      "name": "birthday-cron",
       "script": "server/cron.js",
       "env": {
         "NODE_ENV": "production",
@@ -29,8 +29,8 @@
       "watch": false,
       "merge_logs": true,
       "autorestart": true,
-      "error_file": "/tmp/shard-cron.stderr.log",
-      "out_file": "/tmp/shard-cron.stdout.log"
+      "error_file": "/tmp/birthday-cron.stderr.log",
+      "out_file": "/tmp/birthday-cron.stdout.log"
     }
   ]
 }
