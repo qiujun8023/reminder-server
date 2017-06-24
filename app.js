@@ -58,7 +58,7 @@ if (!module.parent) {
   createServer().then((server) => {
     server.listen(port, host)
     // eslint-disable-next-line
-    console.log('Server listen on ' + config.base_url);
+    console.log('Server listen on ' + config.baseUrl);
   })
 } else {
   module.exports = createServer

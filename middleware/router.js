@@ -39,14 +39,14 @@ router.use('/api', function () {
 })
 
 // 设置前端路径
-router.use('/', express.static(config.client_dir))
+router.use('/', express.static(config.clientDir))
 
 // API文档
 router.use('/doc', express.static(path.resolve(__dirname, '../spec/swagger-renderer')))
 
 // 使用前端路由，所以默认发送前端index页面
 router.get('/*', function (req, res) {
-  res.sendFile(path.resolve(config.client_dir, 'index.html'))
+  res.sendFile(path.resolve(config.clientDir, 'index.html'))
 })
 
 module.exports = () => router

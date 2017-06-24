@@ -9,7 +9,7 @@ let env = process.env.NODE_ENV || 'development'
 let config = {
   host: '127.0.0.1',
   port: '8002',
-  base_url: 'http://127.0.0.1:8002/',
+  baseUrl: 'http://127.0.0.1:8002/',
 
   env,
   debug: env === 'development',
@@ -55,7 +55,7 @@ let config = {
     }
   },
 
-  client_dir: path.join(__dirname, '../../client/dist')
+  clientDir: path.join(__dirname, '../../client/dist')
 }
 
 module.exports = config

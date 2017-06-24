@@ -12,6 +12,7 @@ schemes:
   - https
 # format of bodies a client can send (Content-Type)
 consumes:
+  - text/xml
   - application/json
   - application/x-www-form-urlencoded
 # format of the responses to the client (Accepts)
