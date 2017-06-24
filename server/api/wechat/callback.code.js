@@ -17,7 +17,8 @@ let router = module.exports = {}
 
 let getRecentAsync = function* (userId) {
   let articles = [{
-    picurl: config.wechat.cover
+    picurl: config.wechat.cover,
+    url: config.baseUrl
   }]
 
   let births = yield Birth.findAsync(userId)
@@ -25,7 +26,7 @@ let getRecentAsync = function* (userId) {
     Object.assign(articles[0], {
       title: '生日提醒',
       description: '哟！少年，你居然还没记录过生日。',
-      url: `${config.base_url}birthday/add`
+      url: config.baseUrl + 'add'
     })
     return articles
   }
@@ -42,8 +43,8 @@ let getRecentAsync = function* (userId) {
     }
 
     // 最多添加五条记录
-    if (i < 5) {
-      articles.push({title, url: `${config.base_url}birthday/${birth.birth_id}`})
+    if (birthToday < 6) {
+      articles.push({title, url: config.baseUrl + birth.birth_id})
     }
   }
 
@@ -51,6 +52,12 @@ let getRecentAsync = function* (userId) {
     articles[0].title = '今天还没有小伙伴过生日哟'
   } else {
     articles[0].title = `今天有 ${birthToday} 位小伙伴过生日呢`
+    if (birthToday >= articles.length) {
+      articles.push({
+        title: '点击查看全部 >>',
+        url: config.baseUrl
+      })
+    }
   }
 
   return articles

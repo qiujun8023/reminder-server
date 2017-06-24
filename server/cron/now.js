@@ -9,7 +9,7 @@ const {Birth, Remind, Log, Utils} = require('../service')
 // 设置已提醒
 let _setIsRemind = function* (remindIds) {
   for (let remindId of remindIds) {
-    yield Remind.updateAsync(remindId, {is_remind: true})
+    yield Remind.updateAsync(remindId, {isRemind: true})
   }
 }
 
@@ -42,7 +42,8 @@ let _remindUserAysnc = function* (needRemind) {
       if (births.length === 1) {
         let article = {
           title: '生日提醒',
-          picurl: config.birthday.wechat.top_pic
+          picurl: config.wechat.cover,
+          url: config.baseUrl + birth.birthId
         }
         if (birth.countdown === 0) {
           article.description =
@@ -65,7 +66,7 @@ let _remindUserAysnc = function* (needRemind) {
 
       // 最多添加五条记录
       if (i < 5) {
-        articles.push({title})
+        articles.push({title, url: config.baseUrl + birth.birthId})
       } else {
         isOverflow = true
       }
@@ -73,14 +74,16 @@ let _remindUserAysnc = function* (needRemind) {
 
     if (isOverflow) {
       articles.push({
-        title: '点击查看全部'
+        title: '点击查看全部 >>',
+        url: config.baseUrl
       })
     }
 
     if (births.length !== 1) {
       articles.unshift({
         title: '少年，你记住小伙伴们的生日了吗',
-        picurl: config.birthday.wechat.top_pic
+        picurl: config.wechat.cover,
+        url: config.baseUrl
       })
     }
 
@@ -96,11 +99,11 @@ let _now = function* () {
   let reminds = yield Remind.findNowAsync()
   for (let remind of reminds) {
     let setting = remind.setting
-    let birth = yield Birth.getAsync(setting.birth_id)
+    let birth = yield Birth.getAsync(setting.birthId)
 
     // 异常数据直接标注已提醒
     if (birth.countdown !== setting.advance) {
-      yield _setIsRemind(remind.remindId)
+      yield _setIsRemind([remind.remindId])
       continue
     }
 
@@ -112,7 +115,7 @@ let _now = function* () {
     needRemind[birth.userId].push(birth)
   }
 
-  return _remindUserAysnc(needRemind)
+  return yield _remindUserAysnc(needRemind)
 }
 
 module.exports = cron('0 * * * * *', _now)

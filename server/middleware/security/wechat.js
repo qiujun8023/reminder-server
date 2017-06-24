@@ -9,7 +9,7 @@ const extra = {
   appid: config.wechat.corpid,
   response_type: 'code',
   scope: 'snsapi_base',
-  redirect_uri: config.base_url + 'api/wechat/oauth'
+  redirect_uri: config.baseUrl + 'api/wechat/oauth'
 }
 
 module.exports = function () {
