@@ -12,7 +12,9 @@ cache:
     - node_modules
 
 install:
+  - cd server
   - npm install -q
+  - cd ..
 
 before_script:
   - mysql -e 'CREATE DATABASE birthday;'
