@@ -4,8 +4,7 @@
       "name": "birthday",
       "script": "server/app.js",
       "env": {
-        "NODE_ENV": "production",
-        "TZ": "Asia/Shanghai"
+        "NODE_ENV": "production"
       },
       "log_date_format": "YYYY-MM-DD HH:mm Z",
       "exec_mode": "cluster",
@@ -22,8 +21,7 @@
       "name": "birthday-cron",
       "script": "server/cron.js",
       "env": {
-        "NODE_ENV": "production",
-        "TZ": "Asia/Shanghai"
+        "NODE_ENV": "production"
       },
       "log_date_format": "YYYY-MM-DD HH:mm Z",
       "watch": false,

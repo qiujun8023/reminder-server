@@ -1,5 +1,7 @@
 'use strict'
 
+process.env.TZ = 'Asia/Shanghai'
+
 const http = require('http')
 
 require('moment').locale('zh-cn')
