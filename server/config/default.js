@@ -21,7 +21,7 @@ let config = {
   },
 
   session: {
-    secret: 'shard secret',
+    secret: 'birthday secret',
     name: 'SESSION'
   },
 
@@ -46,7 +46,7 @@ let config = {
     agentid: 0,
     token: 'mRoQySqj2XBEORdnuOh9wei17',
     aeskey: '6mRfWp9o1dfXHnmRBCFmTlpM3IIY377wy2iDJJjx4lM',
-    cover: 'https://cdn.qiujun.me/images/birthday/wx-bg.png!wechat'
+    cover: 'https://cdn.qiujun.me/images/birthday/cover.png!birthday.wechat'
   },
 
   logger: {
