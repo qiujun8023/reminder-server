@@ -20,11 +20,11 @@ produces:
   - application/json
 tags:
   - name: birth
-    description: 生日列表
+    description: 生日
   - name: setting
-    description: 提醒设置
+    description: 提醒
   - name: wechat
-    description: 微信回调
+    description: 微信
 securityDefinitions:
   wechat:
     type: apiKey
