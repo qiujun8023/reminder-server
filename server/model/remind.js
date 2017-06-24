@@ -31,4 +31,6 @@ module.exports = sequelize.define('remind', {
       this.setDataValue('isRemind', isRemind ? 'Y' : 'N')
     }
   }
+}, {
+  freezeTableName: true
 })

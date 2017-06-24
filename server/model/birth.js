@@ -38,4 +38,6 @@ module.exports = sequelize.define('birth', {
       return moment(date).format('YYYY-MM-DD')
     }
   }
+}, {
+  freezeTableName: true
 })

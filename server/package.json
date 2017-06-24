@@ -5,7 +5,7 @@
     "node": ">=6.9.0"
   },
   "engine-strict": true,
-  "description": "生日提醒",
+  "description": "生日管家",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon -e js,yaml app.js",
