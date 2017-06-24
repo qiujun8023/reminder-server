@@ -1,0 +1,105 @@
+get:
+  tags: [ birth ]
+  summary: 获取生日列表
+  security:
+  - wechat: []
+  responses:
+    200:
+      description: 生日列表
+      schema:
+        type: array
+        items:
+          $ref: "#/definitions/Birth"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"
+post:
+  tags: [ birth ]
+  summary: 新增生日
+  security:
+  - wechat: []
+  parameters:
+    - name: title
+      in: formData
+      type: string
+      maxLength: 255
+      required: true
+      description: 姓名/标题
+    - name: type
+      in: formData
+      type: string
+      enum: [SOLAR, LUNAR]
+      required: true
+      description: 阴历/阳历
+    - name: date
+      in: formData
+      type: string
+      required: true
+      description: 日期
+  responses:
+    201:
+      description: 生日
+      schema:
+        $ref: "#/definitions/Birth"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"
+put:
+  tags: [ birth ]
+  summary: 修改生日
+  security:
+  - wechat: []
+  parameters:
+    - name: birthId
+      in: formData
+      type: integer
+      required: true
+      description: 生日 Id
+    - name: title
+      in: formData
+      type: string
+      maxLength: 255
+      required: false
+      description: 姓名/标题
+    - name: type
+      in: formData
+      type: string
+      enum: [SOLAR, LUNAR]
+      required: false
+      description: 阴历/阳历
+    - name: date
+      in: formData
+      type: string
+      required: false
+      description: 日期
+  responses:
+    200:
+      description: 生日
+      schema:
+        $ref: "#/definitions/Birth"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"
+delete:
+  tags: [ birth ]
+  summary: 删除生日
+  security:
+  - wechat: []
+  parameters:
+    - name: birthId
+      in: query
+      type: integer
+      required: true
+      description: 生日 Id
+  responses:
+    200:
+      description: 删除完成
+      schema:
+        $ref: "#/definitions/SuccessResponse"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"

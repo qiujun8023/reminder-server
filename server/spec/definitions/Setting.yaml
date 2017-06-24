@@ -1,0 +1,15 @@
+type: object
+required:
+  - settingId
+  - advance
+  - time
+properties:
+  settingId:
+    type: integer
+    example: 1
+  advance:
+    type: integer
+    example: 0
+  time:
+    type: string
+    example: 08:00
