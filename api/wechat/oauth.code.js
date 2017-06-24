@@ -34,6 +34,6 @@ module.exports = {
     }
 
     req.session.user = yield User.addOrUpdateAsync(user)
-    res.redirect(state || '/birthday')
+    res.redirect(state || '/')
   }
 }

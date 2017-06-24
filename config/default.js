@@ -22,7 +22,7 @@ let config = {
 
   session: {
     secret: 'shard secret',
-    name: 'ABC'
+    name: 'SESSION'
   },
 
   redis: {
