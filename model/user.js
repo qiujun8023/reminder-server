@@ -58,6 +58,7 @@ module.exports = sequelize.define('user', {
     comment: '头像'
   }
 }, {
+  freezeTableName: true,
   createdAt: 'registAt',
   updatedAt: 'loginAt'
 })

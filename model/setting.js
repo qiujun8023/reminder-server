@@ -31,4 +31,6 @@ module.exports = sequelize.define('setting', {
       return time && time.slice(0, 5)
     }
   }
+}, {
+  freezeTableName: true
 })
