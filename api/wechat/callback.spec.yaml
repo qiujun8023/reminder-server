@@ -1,5 +1,4 @@
 get:
-  x-app: wechat
   tags: [ wechat ]
   summary: 微信GET
   responses:
@@ -8,7 +7,6 @@ get:
       schema:
         type: string
 post:
-  x-app: wechat
   tags: [ wechat ]
   summary: 微信POST
   responses:

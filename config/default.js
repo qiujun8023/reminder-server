@@ -1,42 +1,43 @@
-'use strict';
+'use strict'
 
-const path = require('path');
+const path = require('path')
 
-const pkg = require('../../package');
+const pkg = require('../package')
+
+let env = process.env.NODE_ENV || 'development'
 
 let config = {
-  protocol: 'http',
   host: '127.0.0.1',
-  port: '8001',
-  base_url: 'http://127.0.0.1:8001/',
+  port: '8002',
+  base_url: 'http://127.0.0.1:8002/',
 
-  env: 'development',
-  debug: true,
+  env,
+  debug: env === 'development',
 
   swagger: {
     info: {
-      version: pkg.version,
-    },
+      version: pkg.version
+    }
   },
 
   session: {
-    secret: 'shard_secret',
-    name: 'session',
+    secret: 'shard secret',
+    name: 'ABC'
   },
 
   redis: {
     host: '127.0.0.1',
     port: 6379,
-    keyPrefix: 'shard:',
+    keyPrefix: 'birthday:'
   },
 
   mysql: {
     poolSize: 5,
     host: '127.0.0.1',
-    user: 'shard',
-    password: 'FhfLaS4uzv5qwnPh',
-    database: 'shard',
-    timezone: '+08:00',
+    user: 'birthday',
+    password: 'password',
+    database: 'birthday',
+    timezone: '+08:00'
   },
 
   wechat: {
@@ -45,38 +46,16 @@ let config = {
     agentid: 0,
     token: 'mRoQySqj2XBEORdnuOh9wei17',
     aeskey: '6mRfWp9o1dfXHnmRBCFmTlpM3IIY377wy2iDJJjx4lM',
-  },
-
-  upyun: {
-    bucket: 'bucket',
-    operator: 'operator',
-    password: 'password',
-    endpoint: 'endpoint',
-    base_url: 'https://example.com', // 请求地址
-  },
-
-  ss: {
-    min_port: 50001,
-    max_port: 50999,
-    maximum_downtime: 60, // 监控报警阈值， 单位 秒
-    init_transfer_enable: 10737418240, // 10G 流量
-    random_password_pool: '0123456789abcdefghijklmnopqrstuvwxyz', // 随机密码字符集
-    transfer_log_save_days: 180, // 单位 天
+    cover: 'https://cdn.qiujun.me/images/birthday/wx-bg.png!wechat'
   },
 
   logger: {
     file: {
-      filename: '/tmp/shard.log',
-    },
+      filename: '/tmp/birthday.log'
+    }
   },
 
-  birthday: {
-    wechat: {
-      top_pic: 'https://cdn.qiujun.me/images/birthday/wx-bg.png!wechat',
-    },
-  },
+  client_dir: path.join(__dirname, '../../client/dist')
+}
 
-  client_dir: path.join(__dirname, '../../client'),
-};
-
-module.exports = config;
+module.exports = config

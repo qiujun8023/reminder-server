@@ -1,99 +1,99 @@
-'use strict';
+'use strict'
 
-const config = require('config');
-const ko = require('express-ko');
-const wechat = require('wechat-enterprise');
+const config = require('config')
+const ko = require('express-ko')
+const wechat = require('wechat-enterprise')
 
-const birthday = require('../../service/birthday');
+const {Birth} = require('../../service')
 
 // 微信配置信息
-let wechat_config = {
+let wechatConfig = {
   corpId: config.wechat.corpid,
   token: config.wechat.token,
-  encodingAESKey: config.wechat.aeskey,
-};
+  encodingAESKey: config.wechat.aeskey
+}
 
-let router = module.exports = {};
+let router = module.exports = {}
 
-let getRecent = function* (user_id) {
+let getRecentAsync = function* (userId) {
   let articles = [{
-    picurl: config.birthday.wechat.top_pic,
-  }];
+    picurl: config.wechat.cover
+  }]
 
-  let births = yield birthday.findBirthAsync(user_id);
+  let births = yield Birth.findAsync(userId)
   if (!births.length) {
     Object.assign(articles[0], {
       title: '生日提醒',
       description: '哟！少年，你居然还没记录过生日。',
-      url: `${config.base_url}birthday/add`,
-    });
-    return articles;
+      url: `${config.base_url}birthday/add`
+    })
+    return articles
   }
 
-  let birth_today = 0;
+  let birthToday = 0
   for (let i = 0; i < births.length; i++) {
-    let title;
-    let birth = births[i];
+    let title
+    let birth = births[i]
     if (birth.countdown === 0) {
-      birth_today++;
-      title = `今天是 ${birth.title}[${birth.age}周岁] 生日哟！`;
+      birthToday++
+      title = `今天是 ${birth.title}[${birth.age}周岁] 生日哟！`
     } else {
-      title = `距离 ${birth.title}[${birth.age + 1}周岁] 生日只有 ${birth.countdown} 天了`;
+      title = `距离 ${birth.title}[${birth.age + 1}周岁] 生日只有 ${birth.countdown} 天了`
     }
 
     // 最多添加五条记录
     if (i < 5) {
-      articles.push({title, url: `${config.base_url}birthday/${birth.birth_id}`});
+      articles.push({title, url: `${config.base_url}birthday/${birth.birth_id}`})
     }
   }
 
-  if (birth_today === 0) {
-    articles[0].title = '今天还没有小伙伴过生日哟';
+  if (birthToday === 0) {
+    articles[0].title = '今天还没有小伙伴过生日哟'
   } else {
-    articles[0].title = `今天有 ${birth_today} 位小伙伴过生日呢`;
+    articles[0].title = `今天有 ${birthToday} 位小伙伴过生日呢`
   }
 
-  return articles;
-};
+  return articles
+}
 
 // 微信点击事件消息处理
-let clickEventHander = function* (req) {
+let clickEventHanderAsync = function* (req) {
   switch (req.EventKey) {
     case 'recent':
-      return yield getRecent(req.FromUserName);
+      return yield getRecentAsync(req.FromUserName)
   }
-};
+}
 
 // 微信事件消息处理
-let eventHandler = function* (req) {
+let eventHandlerAsync = function* (req) {
   switch (req.Event) {
     case 'click':
-      return yield clickEventHander(req);
+      return yield clickEventHanderAsync(req)
   }
-};
+}
 
 // 微信消息处理
-let handler = function* (req, res) {
-  let answer;
+let handlerAsync = function* (req, res) {
+  let answer
   switch (req.weixin.MsgType) {
     case 'event':
-      answer = yield eventHandler(req.weixin);
-      break;
+      answer = yield eventHandlerAsync(req.weixin)
+      break
   }
 
-  res.reply(answer);
-};
+  res.reply(answer)
+}
 
 router.post = router.get = function* (req, res, next) {
   if (req.isSwitchOn('wechat')) {
-    req.weixin = req.body;
+    req.weixin = req.body
     // 防止返回值检查
     res.reply = function (data) {
-      res.set('Content-Type', 'application/json');
-      res.send(JSON.stringify(data));
-    };
-    yield handler(req, res);
-    return;
+      res.set('Content-Type', 'application/json')
+      res.send(JSON.stringify(data))
+    }
+    yield handlerAsync(req, res)
+    return
   }
-  wechat(wechat_config, ko(handler))(req, res, next);
-};
+  wechat(wechatConfig, ko(handlerAsync))(req, res, next)
+}
