@@ -37,7 +37,7 @@ describe(BASE_PATH, function () {
       expect(res.body.type).to.equal('InvalidParameter')
     })
 
-    it('should throw not found with invalid birthId', function* () {
+    it('should throw not found with invalid birth id', function* () {
       yield api.post(BASE_PATH)
         .use(userPlugin.plugin())
         .send({
@@ -62,7 +62,7 @@ describe(BASE_PATH, function () {
   })
 
   describe('get', function () {
-    it('should throw not found with invalid birthId', function* () {
+    it('should throw not found error', function* () {
       yield api.get(BASE_PATH)
         .use(userPlugin.plugin())
         .query({
@@ -82,6 +82,17 @@ describe(BASE_PATH, function () {
   })
 
   describe('put', function () {
+    it('should throw not found error', function* () {
+      yield api.put(BASE_PATH)
+        .use(userPlugin.plugin())
+        .send({
+          settingId: -1,
+          advance: random.getSettingAdvance(),
+          time: random.getSettingTime()
+        })
+        .expect(404)
+    })
+
     it('should update setting success', function* () {
       let advance = random.getSettingAdvance()
       let time = random.getSettingTime()
@@ -95,7 +106,7 @@ describe(BASE_PATH, function () {
   })
 
   describe('delete', function () {
-    it('should return not found with invalid settingId', function* () {
+    it('should return not found with invalid setting id', function* () {
       yield api.delete(BASE_PATH)
         .use(userPlugin.plugin())
         .query({

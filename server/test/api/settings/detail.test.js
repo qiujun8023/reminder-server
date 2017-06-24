@@ -21,6 +21,13 @@ describe(BASE_PATH, function () {
   })
 
   describe('get', function () {
+    it('should throw not found error', function* () {
+      yield api.get(BASE_PATH)
+        .query({settingId: -1})
+        .use(userPlugin.plugin())
+        .expect(404)
+    })
+
     it('should return setting detail', function* () {
       let res = yield api.post('/api/settings')
         .use(userPlugin.plugin())

@@ -20,6 +20,13 @@ describe(BASE_PATH, function () {
   })
 
   describe('get', function () {
+    it('should throw not found error', function* () {
+      yield api.get(BASE_PATH)
+        .query({birthId: -1})
+        .use(userPlugin.plugin())
+        .expect(404)
+    })
+
     it('should return birth detail', function* () {
       yield api.get(BASE_PATH)
         .query({birthId: birth.birthId})
