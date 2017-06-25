@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "birthday",
-      "script": "server/app.js",
+      "script": "app.js",
       "env": {
         "NODE_ENV": "production"
       },
@@ -19,7 +19,7 @@
     },
     {
       "name": "birthday-cron",
-      "script": "server/cron.js",
+      "script": "cron.js",
       "env": {
         "NODE_ENV": "production"
       },
