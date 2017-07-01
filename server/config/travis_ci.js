@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  env: 'test'
+  env: 'test',
 
   redis: {
     host: 'localhost',
