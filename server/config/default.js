@@ -4,15 +4,12 @@ const path = require('path')
 
 const pkg = require('../package')
 
-let env = process.env.NODE_ENV || 'development'
-
-let config = {
-  host: '127.0.0.1',
+module.exports = {
+  host: 'localhost',
   port: '8002',
-  baseUrl: 'http://127.0.0.1:8002/',
+  baseUrl: 'http://localhost:8002/',
 
-  env,
-  debug: env === 'development',
+  env: 'development',
 
   swagger: {
     info: {
@@ -26,14 +23,14 @@ let config = {
   },
 
   redis: {
-    host: '127.0.0.1',
+    host: 'localhost',
     port: 6379,
     keyPrefix: 'birthday:'
   },
 
   mysql: {
     poolSize: 5,
-    host: '127.0.0.1',
+    host: 'localhost',
     user: 'birthday',
     password: 'password',
     database: 'birthday',
@@ -49,13 +46,5 @@ let config = {
     cover: 'https://cdn.qiujun.me/images/birthday/cover.png!birthday.wechat'
   },
 
-  logger: {
-    file: {
-      filename: '/tmp/birthday.log'
-    }
-  },
-
   clientDir: path.join(__dirname, '../../client/dist')
 }
-
-module.exports = config
