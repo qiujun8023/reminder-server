@@ -77,7 +77,16 @@ utils.getCountdown = function (today, birth, type) {
 
   // 计算日期差
   let tmp = moment([today.cYear, today.cMonth - 1, today.cDay])
-  return moment(nextBirthday).diff(tmp, 'days')
+  let countdown = moment(nextBirthday).diff(tmp, 'days')
+
+  // 受闰月影响
+  if (countdown < 0 && type !== 'SOLAR') {
+    if (solarLunar.leapMonth(today.lYear) === birth.lMonth) {
+      countdown += solarLunar.leapDays(today.lYear)
+    }
+  }
+
+  return countdown
 }
 
 // 格式化生日
