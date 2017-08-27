@@ -44,7 +44,7 @@ let getRecentAsync = function* (userId) {
 
     // 最多添加五条记录
     if (i < 6) {
-      articles.push({title, url: config.baseUrl + birth.birth_id})
+      articles.push({title, url: config.baseUrl + birth.birthId})
     }
   }
 
