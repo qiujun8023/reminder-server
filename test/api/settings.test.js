@@ -1,4 +1,3 @@
-'use strict'
 
 const expect = require('chai').expect
 
@@ -14,18 +13,18 @@ describe(BASE_PATH, function () {
   let setting
 
   before(function* () {
-    let user = yield userPlugin.before()
-    birth = yield utility.createTestBirthAsync(user.userId)
+    let user = await userPlugin.before()
+    birth = await utility.createTestBirthAsync(user.userId)
   })
 
   after(function* () {
-    yield utility.removeTestBirthAsync(birth)
-    yield userPlugin.after()
+    await utility.removeTestBirthAsync(birth)
+    await userPlugin.after()
   })
 
   describe('post', function () {
     it('should return error with invalid advance', function* () {
-      let res = yield api.post(BASE_PATH)
+      let res = await api.post(BASE_PATH)
         .use(userPlugin.plugin())
         .send({
           birthId: birth.birthId,
@@ -38,7 +37,7 @@ describe(BASE_PATH, function () {
     })
 
     it('should throw not found with invalid birth id', function* () {
-      yield api.post(BASE_PATH)
+      await api.post(BASE_PATH)
         .use(userPlugin.plugin())
         .send({
           birthId: -1,
@@ -49,7 +48,7 @@ describe(BASE_PATH, function () {
     })
 
     it('should add setting success', function* () {
-      let res = yield api.post(BASE_PATH)
+      let res = await api.post(BASE_PATH)
         .use(userPlugin.plugin())
         .send({
           birthId: birth.birthId,
@@ -63,7 +62,7 @@ describe(BASE_PATH, function () {
 
   describe('get', function () {
     it('should throw not found error', function* () {
-      yield api.get(BASE_PATH)
+      await api.get(BASE_PATH)
         .use(userPlugin.plugin())
         .query({
           birthId: -1
@@ -73,7 +72,7 @@ describe(BASE_PATH, function () {
 
     it('should return setting list', function* () {
       let birthId = birth.birthId
-      let res = yield api.get(BASE_PATH)
+      let res = await api.get(BASE_PATH)
         .use(userPlugin.plugin())
         .query({birthId})
         .expect(200)
@@ -83,7 +82,7 @@ describe(BASE_PATH, function () {
 
   describe('put', function () {
     it('should throw not found error', function* () {
-      yield api.put(BASE_PATH)
+      await api.put(BASE_PATH)
         .use(userPlugin.plugin())
         .send({
           settingId: -1,
@@ -96,7 +95,7 @@ describe(BASE_PATH, function () {
     it('should update setting success', function* () {
       let advance = random.getSettingAdvance()
       let time = random.getSettingTime()
-      let res = yield api.put(BASE_PATH)
+      let res = await api.put(BASE_PATH)
         .use(userPlugin.plugin())
         .send({settingId: setting.settingId, advance, time})
         .expect(200)
@@ -107,7 +106,7 @@ describe(BASE_PATH, function () {
 
   describe('delete', function () {
     it('should return not found with invalid setting id', function* () {
-      yield api.delete(BASE_PATH)
+      await api.delete(BASE_PATH)
         .use(userPlugin.plugin())
         .query({
           settingId: -1
@@ -118,11 +117,11 @@ describe(BASE_PATH, function () {
     it('should delete setting success', function* () {
       let birthId = birth.birthId
       let settingId = setting.settingId
-      yield api.delete(BASE_PATH)
+      await api.delete(BASE_PATH)
         .use(userPlugin.plugin())
         .query({settingId})
         .expect(200)
-      let res = yield api.get(BASE_PATH)
+      let res = await api.get(BASE_PATH)
         .use(userPlugin.plugin())
         .query({birthId})
         .expect(200)

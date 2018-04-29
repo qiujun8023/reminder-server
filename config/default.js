@@ -1,25 +1,27 @@
-'use strict'
-
 const path = require('path')
 
 const pkg = require('../package')
 
 module.exports = {
-  host: 'localhost',
-  port: '8002',
-  baseUrl: 'http://localhost:8002/',
-
   env: 'development',
+  debug: true,
+
+  server: {
+    host: '127.0.0.1',
+    port: 8000,
+    clientPath: path.join(__dirname, '../../client/dist'),
+    baseUrl: 'http://localhost:8000/'
+  },
+
+  keys: [
+    'im a newer secret',
+    'i like turtle'
+  ],
 
   swagger: {
     info: {
       version: pkg.version
     }
-  },
-
-  session: {
-    secret: 'birthday secret',
-    name: 'SESSION'
   },
 
   redis: {
@@ -29,22 +31,19 @@ module.exports = {
   },
 
   mysql: {
-    poolSize: 5,
     host: 'localhost',
     user: 'birthday',
     password: 'password',
     database: 'birthday',
-    timezone: '+08:00'
+    timezone: 'Asia/Shanghai'
   },
 
   wechat: {
-    corpid: 'wx4e2c2b771c467c9f',
+    corpId: 'wx4e2c2b771c467c9f',
     secret: 'k7TGD8xJLDU6-sPH3NwY0eTs2oBPyAINMdbSbGN80fuEt01UK0Z8dWzhm7crgkz7',
-    agentid: 0,
+    agentId: 0,
     token: 'mRoQySqj2XBEORdnuOh9wei17',
-    aeskey: '6mRfWp9o1dfXHnmRBCFmTlpM3IIY377wy2iDJJjx4lM',
-    cover: 'https://cdn.qiujun.me/images/birthday/cover.png!birthday.wechat'
-  },
-
-  clientDir: path.join(__dirname, '../../client/dist')
+    aesKey: '6mRfWp9o1dfXHnmRBCFmTlpM3IIY377wy2iDJJjx4lM',
+    bgImage: 'https://cdn.qiujun.me/images/birthday/cover.png!birthday.wechat'
+  }
 }

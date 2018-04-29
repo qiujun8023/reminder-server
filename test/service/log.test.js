@@ -1,4 +1,3 @@
-'use strict'
 
 const expect = require('chai').expect
 
@@ -9,22 +8,22 @@ describe('service/log', function () {
   let user
 
   before(function* () {
-    user = yield utility.createTestUserAsync()
+    user = await utility.createTestUserAsync()
   })
 
   after(function* () {
-    yield utility.removeTestUserAsync(user)
+    await utility.removeTestUserAsync(user)
   })
 
   describe('addLogAsync', function () {
     it('should return false if user not found', function* () {
-      let tmpLog = yield Log.addAsync(-1)
+      let tmpLog = await Log.addAsync(-1)
       expect(tmpLog).to.be.false
     })
 
     it('should add logs success', function* () {
       let content = 'test content'
-      let log = yield Log.addAsync(user.userId, {content})
+      let log = await Log.addAsync(user.userId, {content})
       expect(log.content).to.equal(content)
     })
   })

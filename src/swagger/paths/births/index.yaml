@@ -1,0 +1,54 @@
+get:
+  tags: [ birth ]
+  summary: 获取生日列表
+  operationId: births#list
+  security:
+    - oauth: []
+  responses:
+    200:
+      description: 生日列表
+      schema:
+        type: array
+        items:
+          $ref: "#/models/birth"
+    default:
+      $ref: "#/responses/failure"
+
+post:
+  tags: [ birth ]
+  summary: 新增生日
+  operationId: births#create
+  security:
+    - oauth: []
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        required:
+          - title
+          - type
+          - date
+        properties:
+          title:
+            type: string
+            maxLength: 255
+            example: "XXX"
+            description: 姓名/标题
+          type:
+            type: string
+            enum: [SOLAR, LUNAR]
+            example: "SOLAR"
+            description: 阴历/阳历
+          date:
+            type: string
+            example: "2018-01-01"
+            description: 日期
+  responses:
+    201:
+      description: 生日
+      schema:
+        $ref: "#/models/birth"
+    default:
+      $ref: "#/responses/failure"

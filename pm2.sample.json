@@ -2,33 +2,18 @@
   "apps": [
     {
       "name": "birthday",
-      "script": "app.js",
+      "script": "src/index.js",
       "env": {
         "NODE_ENV": "production"
       },
       "log_date_format": "YYYY-MM-DD HH:mm Z",
       "exec_mode": "cluster",
-      "instances": 2,
-      "min_uptime": "200s",
-      "max_memory_restart": "500M",
+      "instances": 0,
       "watch": false,
       "merge_logs": true,
       "autorestart": true,
-      "error_file": "/tmp/birthday.stderr.log",
-      "out_file": "/tmp/birthday.stdout.log"
-    },
-    {
-      "name": "birthday-cron",
-      "script": "cron.js",
-      "env": {
-        "NODE_ENV": "production"
-      },
-      "log_date_format": "YYYY-MM-DD HH:mm Z",
-      "watch": false,
-      "merge_logs": true,
-      "autorestart": true,
-      "error_file": "/tmp/birthday-cron.stderr.log",
-      "out_file": "/tmp/birthday-cron.stdout.log"
+      "error_file": "/tmp/birthday.log",
+      "out_file": "/tmp/birthday.log"
     }
   ]
 }
