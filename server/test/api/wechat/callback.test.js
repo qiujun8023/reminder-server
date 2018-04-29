@@ -1,4 +1,3 @@
-'use strict'
 
 const expect = require('chai').expect
 const moment = require('moment')
@@ -14,15 +13,15 @@ describe(BASE_PATH, function () {
   let user
 
   before(function* () {
-    user = yield userPlugin.before()
+    user = await userPlugin.before()
   })
 
   after(function* () {
-    yield userPlugin.after()
+    await userPlugin.after()
   })
 
   it('should return empty with invalid content', function* () {
-    let res = yield api.post(BASE_PATH)
+    let res = await api.post(BASE_PATH)
       .use(switchPlugin.plugin({wechat: true}))
       .send({
         FromUserName: user.userId,
@@ -35,7 +34,7 @@ describe(BASE_PATH, function () {
   })
 
   it('should return without birth info', function* () {
-    let res = yield api.post(BASE_PATH)
+    let res = await api.post(BASE_PATH)
       .use(switchPlugin.plugin({wechat: true}))
       .send({
         FromUserName: user.userId,
@@ -48,8 +47,8 @@ describe(BASE_PATH, function () {
   })
 
   it('should return with birth info', function* () {
-    let birth1 = yield utility.createTestBirthAsync(user.userId)
-    let res1 = yield api.post(BASE_PATH)
+    let birth1 = await utility.createTestBirthAsync(user.userId)
+    let res1 = await api.post(BASE_PATH)
       .use(switchPlugin.plugin({wechat: true}))
       .send({
         FromUserName: user.userId,
@@ -59,11 +58,11 @@ describe(BASE_PATH, function () {
       })
       .expect(200)
     expect(res1.body.length).to.be.equal(2)
-    let birth2 = yield utility.createTestBirthAsync(user.userId, {
+    let birth2 = await utility.createTestBirthAsync(user.userId, {
       type: 'SOLAR',
       date: moment().format('YYYY-MM-DD')
     })
-    let res2 = yield api.post(BASE_PATH)
+    let res2 = await api.post(BASE_PATH)
       .use(switchPlugin.plugin({wechat: true}))
       .send({
         FromUserName: user.userId,
@@ -73,7 +72,7 @@ describe(BASE_PATH, function () {
       })
       .expect(200)
     expect(res2.body.length).to.be.equal(3)
-    yield utility.removeTestBirthAsync(birth1)
-    yield utility.removeTestBirthAsync(birth2)
+    await utility.removeTestBirthAsync(birth1)
+    await utility.removeTestBirthAsync(birth2)
   })
 })

@@ -1,4 +1,3 @@
-'use strict'
 
 const expect = require('chai').expect
 
@@ -12,16 +11,16 @@ describe(BASE_PATH, function () {
   let birth
 
   before(function* () {
-    yield userPlugin.before()
+    await userPlugin.before()
   })
 
   after(function* () {
-    yield userPlugin.after()
+    await userPlugin.after()
   })
 
   describe('get', function () {
     it('should return birth list', function* () {
-      let res = yield api.get(BASE_PATH)
+      let res = await api.get(BASE_PATH)
         .use(userPlugin.plugin())
         .expect(200)
       expect(res.body.length).to.equal(0)
@@ -30,7 +29,7 @@ describe(BASE_PATH, function () {
 
   describe('post', function () {
     it('should return error with invalid type', function* () {
-      let res = yield api.post(BASE_PATH)
+      let res = await api.post(BASE_PATH)
         .use(userPlugin.plugin())
         .send({
           title: random.getBirthTitle(),
@@ -46,12 +45,12 @@ describe(BASE_PATH, function () {
       let title = random.getBirthTitle()
       let type = random.getBirthType()
       let date = random.getBirthDate()
-      yield api.post(BASE_PATH)
+      await api.post(BASE_PATH)
         .use(userPlugin.plugin())
         .send({title, type, date})
         .expect(201)
 
-      let res = yield api.get(BASE_PATH)
+      let res = await api.get(BASE_PATH)
         .use(userPlugin.plugin())
         .expect(200)
 
@@ -64,7 +63,7 @@ describe(BASE_PATH, function () {
 
   describe('put', function () {
     it('should return error if birth not found', function* () {
-      yield api.put(BASE_PATH)
+      await api.put(BASE_PATH)
         .use(userPlugin.plugin())
         .send({
           birthId: -1,
@@ -80,7 +79,7 @@ describe(BASE_PATH, function () {
       let title = random.getBirthTitle()
       let type = random.getBirthType()
       let date = random.getBirthDate()
-      let res = yield api.put(BASE_PATH)
+      let res = await api.put(BASE_PATH)
         .use(userPlugin.plugin())
         .send({birthId, title, type, date})
         .expect(200)
@@ -93,11 +92,11 @@ describe(BASE_PATH, function () {
   describe('delete', function () {
     it('should delete birth success', function* () {
       let birthId = birth.birthId
-      yield api.delete(BASE_PATH)
+      await api.delete(BASE_PATH)
         .use(userPlugin.plugin())
         .query({birthId})
         .expect(200)
-      yield api.delete(BASE_PATH)
+      await api.delete(BASE_PATH)
         .use(userPlugin.plugin())
         .query({birthId})
         .expect(404)

@@ -17,8 +17,7 @@
 ```bash
 cd /path/to/birthday/server/
 npm install
-cp config/default.js config/local.js
-cp pm2.sample.json pm2.json
+cp config/default.js config/local.js # 修改配置文件
 npm run start
 ```
 

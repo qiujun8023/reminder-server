@@ -1,4 +1,3 @@
-'use strict'
 
 const wechat = require('../../lib/wechat')
 

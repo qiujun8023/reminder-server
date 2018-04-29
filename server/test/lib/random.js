@@ -1,4 +1,3 @@
-'use strict'
 
 const Chance = require('chance')
 const moment = require('moment')

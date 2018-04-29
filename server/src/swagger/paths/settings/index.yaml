@@ -1,0 +1,59 @@
+get:
+  tags: [ setting ]
+  summary: 获取提醒列表
+  operationId: settings#list
+  security:
+    - oauth: []
+  parameters:
+    - name: birthId
+      in: query
+      type: integer
+      required: true
+      description: 生日 Id
+  responses:
+    200:
+      description: 设置列表
+      schema:
+        type: array
+        items:
+          $ref: "#/models/setting"
+    default:
+      $ref: "#/responses/failure"
+
+post:
+  tags: [ setting ]
+  summary: 新增提醒
+  operationId: settings#create
+  security:
+    - oauth: []
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        required:
+          - birthId
+          - advance
+          - time
+        properties:
+          birthId:
+            type: integer
+            example: 1
+            description: 生日 Id
+          advance:
+            type: integer
+            minimum: 0
+            example: 0
+            description: 当前/提前提醒的天数
+          time:
+            type: string
+            example: "12:00"
+            description: 提醒的时间
+  responses:
+    201:
+      description: 设置
+      schema:
+        $ref: "#/models/setting"
+    default:
+      $ref: "#/responses/failure"

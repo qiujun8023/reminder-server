@@ -1,4 +1,3 @@
-'use strict'
 
 const _ = require('lodash')
 
@@ -15,11 +14,11 @@ exports.createTestUserAsync = function* (opts) {
     avatar: random.getUserAvatar()
   }, opts || {})
 
-  return yield User.addOrUpdateAsync(data)
+  return await User.addOrUpdateAsync(data)
 }
 
 exports.removeTestUserAsync = function* (user) {
-  return yield User.removeAsync(user.userId)
+  return await User.removeAsync(user.userId)
 }
 
 exports.createTestBirthAsync = function* (userId, opts) {
@@ -29,11 +28,11 @@ exports.createTestBirthAsync = function* (userId, opts) {
     date: random.getBirthDate()
   }, opts || {})
 
-  return yield Birth.addAsync(userId, data)
+  return await Birth.addAsync(userId, data)
 }
 
 exports.removeTestBirthAsync = function* (birth) {
-  return yield Birth.removeAsync(birth.birthId)
+  return await Birth.removeAsync(birth.birthId)
 }
 
 exports.createTestSettingAsync = function* (birthId, opts) {
@@ -42,9 +41,9 @@ exports.createTestSettingAsync = function* (birthId, opts) {
     time: random.getSettingTime()
   }, opts || {})
 
-  return yield Setting.addAsync(birthId, data)
+  return await Setting.addAsync(birthId, data)
 }
 
 exports.removeTestSettingAsync = function* (setting) {
-  return yield Setting.removeAsync(setting.settingId)
+  return await Setting.removeAsync(setting.settingId)
 }

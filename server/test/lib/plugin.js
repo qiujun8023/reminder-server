@@ -1,4 +1,3 @@
-'use strict'
 
 const utility = require('./utility')
 const errors = require('../../lib/errors')
@@ -10,7 +9,7 @@ class BasePlugin {
 
 class UserPlugin extends BasePlugin {
   *before (opts) {
-    this.user = yield utility.createTestUserAsync(opts || {})
+    this.user = await utility.createTestUserAsync(opts || {})
     return this.user
   }
 
@@ -25,7 +24,7 @@ class UserPlugin extends BasePlugin {
   }
 
   *after () {
-    return yield utility.removeTestUserAsync(this.user)
+    return await utility.removeTestUserAsync(this.user)
   }
 }
 
