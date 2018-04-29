@@ -1,5 +1,6 @@
 const _ = require('lodash')
 
+const utils = require('../lib/utils')
 const errors = require('../lib/errors')
 const birthService = require('../service/birth')
 
@@ -21,7 +22,8 @@ module.exports = {
 
   async list (ctx) {
     let { userId } = ctx.session.user
-    ctx.body = await birthService.findByUserIdAsync(userId)
+    let births = await birthService.findByUserIdAsync(userId)
+    ctx.body = utils.sortBirths(births)
   },
 
   async create (ctx) {
