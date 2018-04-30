@@ -4,7 +4,7 @@ const utils = require('../lib/utils')
 const random = require('../lib/random')
 const settingService = require('../../src/service/setting')
 
-describe('service/setting', function () {
+describe('service/setting', () => {
   let user
   let birth
   let setting
@@ -19,7 +19,7 @@ describe('service/setting', function () {
     await utils.removeTestUserAsync(user)
   })
 
-  describe('createAsync', function () {
+  describe('createAsync', () => {
     it('should create setting success', async () => {
       setting = await utils.createTestSettingAsync(user.userId, birth.birthId)
       setting = setting.get({ plain: true })
@@ -27,7 +27,7 @@ describe('service/setting', function () {
     })
   })
 
-  describe('getAsync', function () {
+  describe('getAsync', () => {
     it('should return null if setting not found', async () => {
       let res = await settingService.getAsync(-1)
       expect(res).to.equal(null)
@@ -41,7 +41,7 @@ describe('service/setting', function () {
     })
   })
 
-  describe('findByBirthIdAsync', function () {
+  describe('findByBirthIdAsync', () => {
     it('should return setting list success', async () => {
       let settings = await settingService.findByBirthIdAsync(birth.birthId)
       expect(settings.length).to.equal(1)
@@ -49,7 +49,7 @@ describe('service/setting', function () {
     })
   })
 
-  describe('updateAsync', function () {
+  describe('updateAsync', () => {
     it('should return false if setting not found', async () => {
       let res = await settingService.updateAsync(-1)
       expect(res).to.equal(false)
@@ -66,7 +66,7 @@ describe('service/setting', function () {
     })
   })
 
-  describe('removeWithRemindAsync', function () {
+  describe('removeWithRemindAsync', () => {
     it('should return false if setting not found', async () => {
       let res = await settingService.removeWithRemindAsync(-1)
       expect(res).to.equal(false)
