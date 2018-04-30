@@ -37,6 +37,12 @@ module.exports = sequelize.define('birth', {
     field: 'date',
     comment: '生日日期'
   },
+  color: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    field: 'color',
+    comment: '颜色'
+  },
   createdAt: {
     type: Sequelize.DATE,
     allowNull: false,

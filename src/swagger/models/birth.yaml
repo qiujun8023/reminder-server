@@ -13,6 +13,9 @@ properties:
   date:
     type: string
     example: "1996-10-01"
+  color:
+    type: string
+    example: "#FFFFFF"
   info:
     $ref: "#/models/info"
   createdAt:
