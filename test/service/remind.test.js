@@ -1,8 +1,7 @@
+const { expect } = require('chai')
 
-const expect = require('chai').expect
-
-const {Remind} = require('../../service')
-const utility = require('../lib/utility')
+const utils = require('../lib/utils')
+const remindService = require('../../src/service/remind')
 
 describe('service/remind', function () {
   let user
@@ -10,47 +9,67 @@ describe('service/remind', function () {
   let setting
   let remind
 
-  before(function* () {
-    user = await utility.createTestUserAsync()
-    birth = await utility.createTestBirthAsync(user.userId)
-    setting = await utility.createTestSettingAsync(birth.birthId)
+  before(async () => {
+    user = await utils.createTestUserAsync()
+    birth = await utils.createTestBirthAsync(user.userId)
+    setting = await utils.createTestSettingAsync(user.userId, birth.birthId)
   })
 
-  after(function* () {
-    await utility.removeTestBirthAsync(birth)
-    await utility.removeTestUserAsync(user)
-    await utility.removeTestSettingAsync(setting)
+  after(async () => {
+    await utils.removeTestBirthAsync(birth)
+    await utils.removeTestUserAsync(user)
+    await utils.removeTestSettingAsync(setting)
   })
 
-  describe('addAsync', function () {
-    it('should return false if setting not found', function* () {
-      let tmpRemind = await Remind.addAsync(-1)
-      expect(tmpRemind).to.be.false
-    })
-
-    it('should add remind success', function* () {
-      remind = await Remind.addAsync(setting.settingId)
+  describe('createAsync', function () {
+    it('should create remind success', async () => {
+      remind = await remindService.createAsync({
+        settingId: setting.settingId,
+        birthId: setting.birthId
+      })
+      remind = remind.get({ plain: true })
       expect(remind).to.include.keys(['remindId', 'isRemind'])
     })
   })
 
-  describe('findNowAsync', function () {
-    it('should return now remind success', function* () {
-      let reminds = await Remind.findNowAsync()
-      expect(reminds).to.be.an('array')
+  describe('findAsync', function () {
+    it('should return remind list success', async () => {
+      let reminds = await remindService.findAsync({
+        birthId: birth.birthId
+      })
+      expect(reminds.length).to.equal(1)
+      expect(reminds[0].birthId).to.equal(birth.birthId)
+    })
+  })
+
+  describe('setReminded', function () {
+    it('should set reminded success', async () => {
+      await remindService.setReminded([remind.remindId])
+      let res = await remindService.findAsync({
+        birthId: birth.birthId
+      })
+      expect(res[0].isRemind).to.equal(true)
     })
   })
 
   describe('updateAsync', function () {
-    it('should return false if remind not found', function* () {
-      let tmpRemind = await Remind.updateAsync(-1)
-      expect(tmpRemind).to.be.false
+    it('should return false if remind not found', async () => {
+      let res = await remindService.updateAsync(-1)
+      expect(res).to.equal(false)
     })
 
-    it('should update remind success', function* () {
-      let isRemind = true
-      remind = await Remind.updateAsync(remind.remindId, {isRemind})
-      expect(remind.isRemind).to.equal(isRemind)
+    it('should update remind success', async () => {
+      remind = await remindService.updateAsync(remind.remindId, {
+        isRemind: false
+      })
+      expect(remind.isRemind).to.equal(false)
+    })
+  })
+
+  describe('findNeedRemindAsync', function () {
+    it('should return now remind success', async () => {
+      let reminds = await remindService.findNeedRemindAsync()
+      expect(reminds).to.be.an('array')
     })
   })
 })

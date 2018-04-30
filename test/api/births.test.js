@@ -1,104 +1,98 @@
+const { expect } = require('chai')
 
-const expect = require('chai').expect
-
-const plugins = require('../lib/plugin')
+const utils = require('../lib/utils')
 const random = require('../lib/random')
 
-let BASE_PATH = '/api/births'
-let userPlugin = plugins.user()
-
-describe(BASE_PATH, function () {
+describe('/api/births', function () {
+  let user
   let birth
 
-  before(function* () {
-    await userPlugin.before()
+  before(async () => {
+    user = await utils.createTestUserAsync()
   })
 
-  after(function* () {
-    await userPlugin.after()
+  after(async () => {
+    await utils.removeTestUserAsync(user)
   })
 
-  describe('get', function () {
-    it('should return birth list', function* () {
-      let res = await api.get(BASE_PATH)
-        .use(userPlugin.plugin())
-        .expect(200)
-      expect(res.body.length).to.equal(0)
-    })
-  })
-
-  describe('post', function () {
-    it('should return error with invalid type', function* () {
-      let res = await api.post(BASE_PATH)
-        .use(userPlugin.plugin())
+  describe('create', function () {
+    it('should create birth success', async () => {
+      let res = await request.post('/api/births')
+        .use(utils.setUserSession(user))
         .send({
-          title: random.getBirthTitle(),
-          type: 'invalid type',
-          date: random.getBirthDate()
-        })
-        .expect(400)
-
-      expect(res.body.type).to.equal('InvalidParameter')
-    })
-
-    it('should add birth success', function* () {
-      let title = random.getBirthTitle()
-      let type = random.getBirthType()
-      let date = random.getBirthDate()
-      await api.post(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({title, type, date})
-        .expect(201)
-
-      let res = await api.get(BASE_PATH)
-        .use(userPlugin.plugin())
-        .expect(200)
-
-      birth = res.body[0]
-      expect(birth.title).to.equal(title)
-      expect(birth.type).to.equal(type)
-      expect(birth.date).to.equal(date)
-    })
-  })
-
-  describe('put', function () {
-    it('should return error if birth not found', function* () {
-      await api.put(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({
-          birthId: -1,
           title: random.getBirthTitle(),
           type: random.getBirthType(),
-          date: random.getBirthDate()
+          date: random.getBirthDate(),
+          color: random.getBirthColor()
         })
+        .expect(201)
+      birth = res.body
+    })
+  })
+
+  describe('list', function () {
+    it('should return birth list', async () => {
+      let res = await request.get('/api/births')
+        .use(utils.setUserSession(user))
+        .expect(200)
+
+      expect(res.body.length).to.equal(1)
+      expect(res.body[0].title).to.equal(birth.title)
+      expect(res.body[0].type).to.equal(birth.type)
+      expect(res.body[0].date).to.equal(birth.date)
+      expect(res.body[0].color).to.equal(birth.color)
+    })
+  })
+
+  describe('detail', function () {
+    it('should throw not found error', async () => {
+      await request.get(`/api/births/-1`)
+        .use(utils.setUserSession(user))
         .expect(404)
     })
 
-    it('should update birth success', function* () {
-      let birthId = birth.birthId
+    it('should return birth detail', async () => {
+      let res = await request.get(`/api/births/${birth.birthId}`)
+        .use(utils.setUserSession(user))
+        .expect(200)
+
+      expect(res.body.title).to.equal(birth.title)
+      expect(res.body.type).to.equal(birth.type)
+      expect(res.body.date).to.equal(birth.date)
+      expect(res.body.color).to.equal(birth.color)
+    })
+  })
+
+  describe('update', function () {
+    it('should update birth success', async () => {
       let title = random.getBirthTitle()
       let type = random.getBirthType()
       let date = random.getBirthDate()
-      let res = await api.put(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({birthId, title, type, date})
+      let color = random.getBirthColor()
+      let res = await request.put(`/api/births/${birth.birthId}`)
+        .use(utils.setUserSession(user))
+        .send({
+          title,
+          type,
+          date,
+          color
+        })
         .expect(200)
       expect(res.body.title).to.equal(title)
       expect(res.body.type).to.equal(type)
       expect(res.body.date).to.equal(date)
+      expect(res.body.color).to.equal(color)
     })
   })
 
-  describe('delete', function () {
-    it('should delete birth success', function* () {
-      let birthId = birth.birthId
-      await api.delete(BASE_PATH)
-        .use(userPlugin.plugin())
-        .query({birthId})
+  describe('remove', function () {
+    it('should remove birth success', async () => {
+      await request.delete(`/api/births/${birth.birthId}`)
+        .use(utils.setUserSession(user))
         .expect(200)
-      await api.delete(BASE_PATH)
-        .use(userPlugin.plugin())
-        .query({birthId})
+
+      await request.delete(`/api/births/${birth.birthId}`)
+        .use(utils.setUserSession(user))
         .expect(404)
     })
   })

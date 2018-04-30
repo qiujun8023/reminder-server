@@ -1,44 +1,27 @@
+const { expect } = require('chai')
 
-const expect = require('chai').expect
-
-const plugins = require('../lib/plugin')
-const utility = require('../lib/utility')
+const utils = require('../lib/utils')
 const random = require('../lib/random')
 
-let BASE_PATH = '/api/settings'
-let userPlugin = plugins.user()
-
-describe(BASE_PATH, function () {
+describe('/api/settings', function () {
+  let user
   let birth
   let setting
 
-  before(function* () {
-    let user = await userPlugin.before()
-    birth = await utility.createTestBirthAsync(user.userId)
+  before(async () => {
+    user = await utils.createTestUserAsync()
+    birth = await utils.createTestBirthAsync(user.userId)
   })
 
-  after(function* () {
-    await utility.removeTestBirthAsync(birth)
-    await userPlugin.after()
+  after(async () => {
+    await utils.removeTestBirthAsync(birth)
+    await utils.removeTestUserAsync(user)
   })
 
-  describe('post', function () {
-    it('should return error with invalid advance', function* () {
-      let res = await api.post(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({
-          birthId: birth.birthId,
-          advance: -1,
-          time: random.getSettingTime()
-        })
-        .expect(400)
-
-      expect(res.body.type).to.equal('InvalidParameter')
-    })
-
-    it('should throw not found with invalid birth id', function* () {
-      await api.post(BASE_PATH)
-        .use(userPlugin.plugin())
+  describe('create', function () {
+    it('should throw not found with invalid birth id', async () => {
+      await request.post('/api/settings')
+        .use(utils.setUserSession(user))
         .send({
           birthId: -1,
           advance: random.getSettingAdvance(),
@@ -47,9 +30,9 @@ describe(BASE_PATH, function () {
         .expect(404)
     })
 
-    it('should add setting success', function* () {
-      let res = await api.post(BASE_PATH)
-        .use(userPlugin.plugin())
+    it('should create setting success', async () => {
+      let res = await request.post('/api/settings')
+        .use(utils.setUserSession(user))
         .send({
           birthId: birth.birthId,
           advance: random.getSettingAdvance(),
@@ -60,72 +43,63 @@ describe(BASE_PATH, function () {
     })
   })
 
-  describe('get', function () {
-    it('should throw not found error', function* () {
-      await api.get(BASE_PATH)
-        .use(userPlugin.plugin())
+  describe('list', function () {
+    it('should throw not found error', async () => {
+      await request.get('/api/settings')
+        .use(utils.setUserSession(user))
         .query({
           birthId: -1
         })
         .expect(404)
     })
 
-    it('should return setting list', function* () {
-      let birthId = birth.birthId
-      let res = await api.get(BASE_PATH)
-        .use(userPlugin.plugin())
-        .query({birthId})
+    it('should return setting list', async () => {
+      let res = await request.get('/api/settings')
+        .use(utils.setUserSession(user))
+        .query({
+          birthId: birth.birthId
+        })
         .expect(200)
       expect(res.body.length).to.equal(1)
     })
   })
 
-  describe('put', function () {
-    it('should throw not found error', function* () {
-      await api.put(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({
-          settingId: -1,
-          advance: random.getSettingAdvance(),
-          time: random.getSettingTime()
-        })
+  describe('detail', function () {
+    it('should throw not found error', async () => {
+      await request.get(`/api/settings/-1`)
+        .use(utils.setUserSession(user))
         .expect(404)
     })
 
-    it('should update setting success', function* () {
+    it('should return setting detail', async () => {
+      await request.get(`/api/settings/${setting.settingId}`)
+        .use(utils.setUserSession(user))
+        .expect(200)
+    })
+  })
+
+  describe('put', function () {
+    it('should update setting success', async () => {
       let advance = random.getSettingAdvance()
       let time = random.getSettingTime()
-      let res = await api.put(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({settingId: setting.settingId, advance, time})
+      let res = await request.put(`/api/settings/${setting.settingId}`)
+        .use(utils.setUserSession(user))
+        .send({ advance, time })
         .expect(200)
       expect(res.body.advance).to.equal(advance)
       expect(res.body.time).to.equal(time)
     })
   })
 
-  describe('delete', function () {
-    it('should return not found with invalid setting id', function* () {
-      await api.delete(BASE_PATH)
-        .use(userPlugin.plugin())
-        .query({
-          settingId: -1
-        })
-        .expect(404)
-    })
+  describe('remove', function () {
+    it('should remove setting success', async () => {
+      await request.delete(`/api/settings/${setting.settingId}`)
+        .use(utils.setUserSession(user))
+        .expect(200)
 
-    it('should delete setting success', function* () {
-      let birthId = birth.birthId
-      let settingId = setting.settingId
-      await api.delete(BASE_PATH)
-        .use(userPlugin.plugin())
-        .query({settingId})
-        .expect(200)
-      let res = await api.get(BASE_PATH)
-        .use(userPlugin.plugin())
-        .query({birthId})
-        .expect(200)
-      expect(res.body.length).to.equal(0)
+      await request.get(`/api/settings/${setting.settingId}`)
+        .use(utils.setUserSession(user))
+        .expect(404)
     })
   })
 })

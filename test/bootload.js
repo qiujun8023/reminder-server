@@ -1,16 +1,9 @@
-
-const events = require('events')
-
 const supertest = require('supertest')
 
-const createServer = require('../app')
+const app = require('../src/app')
+const utils = require('../src/lib/utils')
 
-// https://github.com/visionmedia/supertest/issues/307
-events.EventEmitter.defaultMaxListeners = Infinity
-
-before(() => {
-  return createServer()
-    .then((server) => {
-      global.api = supertest(server)
-    })
+before(async () => {
+  await utils.sleep(1500)
+  global.request = supertest(app.listen())
 })

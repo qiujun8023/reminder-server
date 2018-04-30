@@ -1,86 +1,81 @@
+const { expect } = require('chai')
 
-const expect = require('chai').expect
-
-const {Setting} = require('../../service')
-const utility = require('../lib/utility')
+const utils = require('../lib/utils')
 const random = require('../lib/random')
+const settingService = require('../../src/service/setting')
 
 describe('service/setting', function () {
   let user
   let birth
   let setting
 
-  before(function* () {
-    user = await utility.createTestUserAsync()
-    birth = await utility.createTestBirthAsync(user.userId)
+  before(async () => {
+    user = await utils.createTestUserAsync()
+    birth = await utils.createTestBirthAsync(user.userId)
   })
 
-  after(function* () {
-    await utility.removeTestBirthAsync(birth)
-    await utility.removeTestUserAsync(user)
+  after(async () => {
+    await utils.removeTestBirthAsync(birth)
+    await utils.removeTestUserAsync(user)
   })
 
-  describe('addAsync', function () {
-    it('should return false if birth not found', function* () {
-      let tmpSetting = await Setting.addAsync(-1)
-      expect(tmpSetting).to.be.false
-    })
-
-    it('should add setting success', function* () {
-      setting = await utility.createTestSettingAsync(birth.birthId)
+  describe('createAsync', function () {
+    it('should create setting success', async () => {
+      setting = await utils.createTestSettingAsync(user.userId, birth.birthId)
+      setting = setting.get({ plain: true })
       expect(setting).to.include.keys(['settingId', 'advance', 'time'])
     })
   })
 
   describe('getAsync', function () {
-    it('should return false if setting not found', function* () {
-      let tmpSetting = await Setting.getAsync(-1)
-      expect(tmpSetting).to.be.false
+    it('should return null if setting not found', async () => {
+      let res = await settingService.getAsync(-1)
+      expect(res).to.equal(null)
     })
 
-    it('should get setting success', function* () {
-      let tmpSetting = await Setting.getAsync(setting.settingId)
-      expect(tmpSetting.settingId).to.equal(setting.settingId)
-      expect(tmpSetting.advance).to.equal(setting.advance)
-      expect(tmpSetting.time).to.equal(setting.time)
+    it('should get setting success', async () => {
+      let res = await settingService.getAsync(setting.settingId)
+      expect(res.settingId).to.equal(setting.settingId)
+      expect(res.advance).to.equal(setting.advance)
+      expect(res.time).to.equal(setting.time)
     })
   })
 
-  describe('findAsync', function () {
-    it('should return setting list success', function* () {
-      let settings = await Setting.findAsync(birth.birthId)
+  describe('findByBirthIdAsync', function () {
+    it('should return setting list success', async () => {
+      let settings = await settingService.findByBirthIdAsync(birth.birthId)
       expect(settings.length).to.equal(1)
       expect(settings[0].settingId).to.equal(setting.settingId)
     })
   })
 
   describe('updateAsync', function () {
-    it('should return false if setting not found', function* () {
-      let tmpSetting = await Setting.updateAsync(-1)
-      expect(tmpSetting).to.be.false
+    it('should return false if setting not found', async () => {
+      let res = await settingService.updateAsync(-1)
+      expect(res).to.equal(false)
     })
 
-    it('should update setting success', function* () {
+    it('should update setting success', async () => {
       let advance = random.getSettingAdvance()
-      let time = '00:00'
-      let tmpSetting = await Setting.updateAsync(setting.settingId, {advance, time})
-      expect(tmpSetting.advance).to.equal(advance)
-      expect(tmpSetting.time).to.equal(time)
-      setting.advance = advance
-      setting.time = time
+      let time = random.getSettingTime()
+      let res = await settingService.updateAsync(setting.settingId, {
+        advance, time
+      })
+      expect(res.advance).to.equal(advance)
+      expect(res.time).to.equal(time)
     })
   })
 
-  describe('removeAsync', function () {
-    it('should return false if setting not found', function* () {
-      let tmpSetting = await Setting.removeAsync(-1)
-      expect(tmpSetting).to.be.false
+  describe('removeWithRemindAsync', function () {
+    it('should return false if setting not found', async () => {
+      let res = await settingService.removeWithRemindAsync(-1)
+      expect(res).to.equal(false)
     })
 
-    it('should remove setting success', function* () {
-      await Setting.removeAsync(setting.settingId)
-      let tmpSetting = await Setting.getAsync(setting.settingId)
-      expect(tmpSetting).to.be.false
+    it('should remove setting success', async () => {
+      await settingService.removeWithRemindAsync(setting.settingId)
+      let res = await settingService.removeWithRemindAsync(setting.settingId)
+      expect(res).to.equal(false)
     })
   })
 })

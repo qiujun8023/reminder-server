@@ -63,7 +63,7 @@ module.exports = {
     let { birthId } = ctx.params
 
     await getAndCheckAsync(userId, birthId)
-    await birthService.removeAsync(birthId)
+    await birthService.removeWithSettingAsync(birthId)
     ctx.body = { success: true }
   }
 }

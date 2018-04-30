@@ -23,11 +23,15 @@ exports.updateAsync = async (settingId, data) => {
   return setting.update(data)
 }
 
-exports.removeAsync = async (settingId) => {
+exports.removeWithRemindAsync = async (settingId) => {
   let setting = await Setting.findById(settingId)
   if (!setting) {
     return false
   }
 
+  let reminds = await setting.getReminds()
+  for (let remind of reminds) {
+    await remind.destroy()
+  }
   return setting.destroy()
 }
