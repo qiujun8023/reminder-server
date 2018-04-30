@@ -3,6 +3,10 @@ const moment = require('moment')
 const solarLunar = require('solarlunar')
 const zodiac = require('12zodiac')
 
+exports.sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 // 生日排序
 exports.sortBirths = (births) => {
   births.sort((a, b) => {

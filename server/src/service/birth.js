@@ -1,4 +1,5 @@
 const { Birth, Setting } = require('../model')
+const settingSerivce = require('./setting')
 
 exports.createAsync = async (data) => {
   return Birth.create(data)
@@ -23,12 +24,16 @@ exports.updateAsync = async (birthId, data) => {
   return birth.update(data)
 }
 
-exports.removeAsync = async (birthId) => {
+exports.removeWithSettingAsync = async (birthId) => {
   let birth = await Birth.findById(birthId)
   if (!birth) {
-    return true
+    return false
   }
 
+  let settings = await birth.getSettings()
+  for (let setting of settings) {
+    await settingSerivce.removeWithRemindAsync(setting.settingId)
+  }
   return birth.destroy()
 }
 

@@ -75,7 +75,7 @@ module.exports = {
     // 检查所有权
     await getAndCheckSettingAsync(settingId, userId)
 
-    await settingService.removeAsync(settingId)
+    await settingService.removeWithRemindAsync(settingId)
     ctx.body = { success: true }
   }
 }

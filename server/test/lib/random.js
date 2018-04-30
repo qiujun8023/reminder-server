@@ -1,32 +1,15 @@
-
 const Chance = require('chance')
 const moment = require('moment')
 
 let chance = new Chance()
 
 module.exports = {
-  getUserId () {
+  getUsername () {
     return chance.word({length: 10})
   },
 
-  getUserName () {
+  getNickname () {
     return chance.word({length: 8})
-  },
-
-  getUserGender () {
-    return chance.pickone(['未知', '男', '女'])
-  },
-
-  getUserMobile () {
-    return '130' + chance.string({length: 8, pool: '0123456789'})
-  },
-
-  getUserEmail () {
-    return chance.email()
-  },
-
-  getUserAvatar () {
-    return chance.avatar()
   },
 
   getBirthTitle () {
@@ -44,6 +27,10 @@ module.exports = {
     return moment(date).format('YYYY-MM-DD')
   },
 
+  getBirthColor () {
+    return chance.color()
+  },
+
   getSettingAdvance () {
     return chance.integer({min: 0, max: 20})
   },
@@ -51,6 +38,6 @@ module.exports = {
   getSettingTime () {
     let hour = chance.hour({twentyfour: true})
     let minute = chance.minute()
-    return `${('00' + hour).slice(-2)}:${('00' + minute).slice(-2)}`
+    return `${('00' + hour).slice(-2)}:${('00' + minute).slice(-2)}:00`
   }
 }

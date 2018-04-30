@@ -1,60 +1,72 @@
+const { expect } = require('chai')
 
-const expect = require('chai').expect
-
-const {User, Birth, Setting} = require('../../service')
-const utility = require('../lib/utility')
+const utils = require('../lib/utils')
 const random = require('../lib/random')
+const userService = require('../../src/service/user')
 
-describe('service/user', function () {
+describe('service/user', () => {
   let user
-  let birth
-  let setting
 
-  describe('addOrUpdateAsync', function () {
-    it('should add user success', function* () {
-      user = await utility.createTestUserAsync()
-      expect(user).to.include.keys(['userId', 'name', 'gender', 'mobile', 'email', 'avatar'])
+  describe('createAsync', () => {
+    it('should create user success', async () => {
+      user = await utils.createTestUserAsync()
+    })
+
+    it('should throw exception if username is exist', async () => {
+      try {
+        await utils.createTestUserAsync({
+          username: user.username
+        })
+      } catch (e) {
+        return true
+      }
+      expect(true).to.equal(false)
     })
   })
 
-  describe('getAsync', function () {
-    it('should return false if user not found', function* () {
-      let tmpUser = await User.getAsync('invalid user')
-      expect(tmpUser).to.be.false
+  describe('getAsync', () => {
+    it('should return null if user not found', async () => {
+      let res = await userService.getAsync(-1)
+      expect(res).to.equal(null)
     })
 
-    it('should get user success', function* () {
-      let tmpUser = await User.getAsync(user.userId)
-      expect(tmpUser.name).to.equal(user.name)
+    it('should get user success', async () => {
+      let res = await userService.getAsync(user.userId)
+      expect(res.username).to.equal(user.username)
     })
   })
 
-  describe('removeAsync', function () {
-    it('should return false if user not found', function* () {
-      let tmpUser = await User.removeAsync(-1)
-      expect(tmpUser).to.be.false
+  describe('getByUserNameAsync', () => {
+    it('should get user success', async () => {
+      let res = await userService.getByUserNameAsync(user.username)
+      expect(res.userId).to.equal(user.userId)
+    })
+  })
+
+  describe('updateAsync', () => {
+    it('should return false if user not found', async () => {
+      let res = await userService.updateAsync(-1)
+      expect(res).to.equal(false)
     })
 
-    it('should add birth success', function* () {
-      birth = await utility.createTestBirthAsync(user.userId)
-      expect(birth).to.include.keys(['birthId', 'title', 'type', 'date'])
+    it('should update user success', async () => {
+      let username = random.getUsername()
+      let res = await userService.updateAsync(user.userId, { username })
+      expect(res.username).to.equal(username)
+      user = res
+    })
+  })
+
+  describe('removeWithBirthAsync', () => {
+    it('should return false if user not found', async () => {
+      let res = await userService.removeWithBirthAsync(-1)
+      expect(res).to.equal(false)
     })
 
-    it('should add setting success', function* () {
-      let advance = random.getSettingAdvance()
-      let time = random.getSettingTime()
-      setting = await Setting.addAsync(birth.birthId, {advance, time})
-      expect(setting).to.include.keys(['settingId', 'advance', 'time'])
-    })
-
-    it('should remove user and birth and setting success', function* () {
-      await User.removeAsync(user.userId)
-      let tmpUser = await User.getAsync(user.userId)
-      let tmpBirth = await Birth.getAsync(birth.birthId)
-      let tmpSetting = await Setting.getAsync(setting.settingId)
-      expect(tmpUser).to.be.false
-      expect(tmpBirth).to.be.false
-      expect(tmpSetting).to.be.false
+    it('should remove user success', async () => {
+      await utils.removeTestUserAsync(user)
+      let res = await userService.getAsync(user.userId)
+      expect(res).to.equal(null)
     })
   })
 })
