@@ -3,7 +3,7 @@ const { expect } = require('chai')
 const utils = require('../lib/utils')
 const random = require('../lib/random')
 
-describe('/api/settings', function () {
+describe('/api/settings', () => {
   let user
   let birth
   let setting
@@ -18,7 +18,7 @@ describe('/api/settings', function () {
     await utils.removeTestUserAsync(user)
   })
 
-  describe('create', function () {
+  describe('create', () => {
     it('should throw not found with invalid birth id', async () => {
       await request.post('/api/settings')
         .use(utils.setUserSession(user))
@@ -43,7 +43,7 @@ describe('/api/settings', function () {
     })
   })
 
-  describe('list', function () {
+  describe('list', () => {
     it('should throw not found error', async () => {
       await request.get('/api/settings')
         .use(utils.setUserSession(user))
@@ -64,7 +64,7 @@ describe('/api/settings', function () {
     })
   })
 
-  describe('detail', function () {
+  describe('detail', () => {
     it('should throw not found error', async () => {
       await request.get(`/api/settings/-1`)
         .use(utils.setUserSession(user))
@@ -78,7 +78,7 @@ describe('/api/settings', function () {
     })
   })
 
-  describe('put', function () {
+  describe('put', () => {
     it('should update setting success', async () => {
       let advance = random.getSettingAdvance()
       let time = random.getSettingTime()
@@ -91,7 +91,7 @@ describe('/api/settings', function () {
     })
   })
 
-  describe('remove', function () {
+  describe('remove', () => {
     it('should remove setting success', async () => {
       await request.delete(`/api/settings/${setting.settingId}`)
         .use(utils.setUserSession(user))

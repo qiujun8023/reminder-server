@@ -4,7 +4,7 @@ const { expect } = require('chai')
 
 const utils = require('../../src//lib/utils')
 
-describe('lib/utils', function () {
+describe('lib/utils', () => {
   let nMement = moment()
   let yMement = moment().subtract(1, 'days')
   let tMoment = moment().add(1, 'days')
@@ -16,8 +16,8 @@ describe('lib/utils', function () {
   let lastYear = solarLunar.solar2lunar(lyMoment.year(), lyMoment.month() + 1, lyMoment.date())
   let lastYearMore = solarLunar.solar2lunar(lmyMoment.year(), lmyMoment.month() + 1, lmyMoment.date())
 
-  describe('sortBirths', function () {
-    it('should sort birth success', function () {
+  describe('sortBirths', () => {
+    it('should sort birth success', () => {
       let births = utils.sortBirths([
         {
           birthId: 1,
@@ -44,71 +44,71 @@ describe('lib/utils', function () {
     })
   })
 
-  describe('solarDateCompare', function () {
-    it('should return -1 if compare today and yesterday', function () {
+  describe('solarDateCompare', () => {
+    it('should return -1 if compare today and yesterday', () => {
       let res = utils.solarDateCompare(today, yesterday)
       expect(res).to.equal(1)
     })
 
-    it('should return 0 if compare today and today', function () {
+    it('should return 0 if compare today and today', () => {
       let res = utils.solarDateCompare(today, today)
       expect(res).to.equal(0)
     })
 
-    it('should return -1 if compare today and tomorrow', function () {
+    it('should return -1 if compare today and tomorrow', () => {
       let res = utils.solarDateCompare(today, tomorrow)
       expect(res).to.equal(-1)
     })
   })
 
-  describe('lunarDateCompare', function () {
-    it('should return -1 if compare today and yesterday', function () {
+  describe('lunarDateCompare', () => {
+    it('should return -1 if compare today and yesterday', () => {
       let res = utils.lunarDateCompare(today, yesterday)
       expect(res).to.equal(1)
     })
 
-    it('should return 0 if compare today and today', function () {
+    it('should return 0 if compare today and today', () => {
       let res = utils.lunarDateCompare(today, today)
       expect(res).to.equal(0)
     })
 
-    it('should return -1 if compare today and tomorrow', function () {
+    it('should return -1 if compare today and tomorrow', () => {
       let res = utils.lunarDateCompare(today, tomorrow)
       expect(res).to.equal(-1)
     })
   })
 
-  describe('getSolarAge', function () {
-    it('should return 1', function () {
+  describe('getSolarAge', () => {
+    it('should return 1', () => {
       let res = utils.getSolarAge(today, lastYear)
       expect(res).to.equal(1)
     })
 
-    it('should return 0', function () {
+    it('should return 0', () => {
       let res = utils.getSolarAge(today, lastYearMore)
       expect(res).to.equal(0)
     })
   })
 
-  describe('getSolarCountdowm', function () {
-    it('should return 1', function () {
+  describe('getSolarCountdowm', () => {
+    it('should return 1', () => {
       let res = utils.getLunarCountdown(today, tomorrow)
       expect(res).to.equal(1)
     })
 
-    it('should return the length of this year', function () {
+    it('should return the length of this year', () => {
       let res = utils.getSolarCountdowm(today, yesterday)
       expect(res).to.equal(nMement.isLeapYear() ? 365 : 364)
     })
   })
 
-  describe('getLunarCountdown', function () {
-    it('should return 1', function () {
+  describe('getLunarCountdown', () => {
+    it('should return 1', () => {
       let res = utils.getLunarCountdown(today, tomorrow)
       expect(res).to.equal(1)
     })
 
-    it('should return the length of this year', function () {
+    it('should return the length of this year', () => {
       let res = utils.getLunarCountdown(today, yesterday)
       let tmp = solarLunar.lunar2solar(yesterday.lYear + 1, yesterday.lMonth, yesterday.lDay)
       let diff = moment([tmp.cYear, tmp.cMonth - 1, tmp.cDay]).diff(yMement, 'days')
@@ -116,8 +116,8 @@ describe('lib/utils', function () {
     })
   })
 
-  describe('formatBirth', function () {
-    it('should format birth success', function () {
+  describe('formatBirth', () => {
+    it('should format birth success', () => {
       let date = `${nMement.year - 1}-${nMement.month}-${nMement.day}`
       let birth1 = utils.getBirthInfo({
         birthId: 1,

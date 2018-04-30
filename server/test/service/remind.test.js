@@ -3,7 +3,7 @@ const { expect } = require('chai')
 const utils = require('../lib/utils')
 const remindService = require('../../src/service/remind')
 
-describe('service/remind', function () {
+describe('service/remind', () => {
   let user
   let birth
   let setting
@@ -21,7 +21,7 @@ describe('service/remind', function () {
     await utils.removeTestSettingAsync(setting)
   })
 
-  describe('createAsync', function () {
+  describe('createAsync', () => {
     it('should create remind success', async () => {
       remind = await remindService.createAsync({
         settingId: setting.settingId,
@@ -32,7 +32,7 @@ describe('service/remind', function () {
     })
   })
 
-  describe('findAsync', function () {
+  describe('findAsync', () => {
     it('should return remind list success', async () => {
       let reminds = await remindService.findAsync({
         birthId: birth.birthId
@@ -42,7 +42,7 @@ describe('service/remind', function () {
     })
   })
 
-  describe('setReminded', function () {
+  describe('setReminded', () => {
     it('should set reminded success', async () => {
       await remindService.setReminded([remind.remindId])
       let res = await remindService.findAsync({
@@ -52,7 +52,7 @@ describe('service/remind', function () {
     })
   })
 
-  describe('updateAsync', function () {
+  describe('updateAsync', () => {
     it('should return false if remind not found', async () => {
       let res = await remindService.updateAsync(-1)
       expect(res).to.equal(false)
@@ -66,7 +66,7 @@ describe('service/remind', function () {
     })
   })
 
-  describe('findNeedRemindAsync', function () {
+  describe('findNeedRemindAsync', () => {
     it('should return now remind success', async () => {
       let reminds = await remindService.findNeedRemindAsync()
       expect(reminds).to.be.an('array')

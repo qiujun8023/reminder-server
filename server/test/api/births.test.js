@@ -3,7 +3,7 @@ const { expect } = require('chai')
 const utils = require('../lib/utils')
 const random = require('../lib/random')
 
-describe('/api/births', function () {
+describe('/api/births', () => {
   let user
   let birth
 
@@ -15,7 +15,7 @@ describe('/api/births', function () {
     await utils.removeTestUserAsync(user)
   })
 
-  describe('create', function () {
+  describe('create', () => {
     it('should create birth success', async () => {
       let res = await request.post('/api/births')
         .use(utils.setUserSession(user))
@@ -30,7 +30,7 @@ describe('/api/births', function () {
     })
   })
 
-  describe('list', function () {
+  describe('list', () => {
     it('should return birth list', async () => {
       let res = await request.get('/api/births')
         .use(utils.setUserSession(user))
@@ -44,7 +44,7 @@ describe('/api/births', function () {
     })
   })
 
-  describe('detail', function () {
+  describe('detail', () => {
     it('should throw not found error', async () => {
       await request.get(`/api/births/-1`)
         .use(utils.setUserSession(user))
@@ -63,7 +63,7 @@ describe('/api/births', function () {
     })
   })
 
-  describe('update', function () {
+  describe('update', () => {
     it('should update birth success', async () => {
       let title = random.getBirthTitle()
       let type = random.getBirthType()
@@ -85,7 +85,7 @@ describe('/api/births', function () {
     })
   })
 
-  describe('remove', function () {
+  describe('remove', () => {
     it('should remove birth success', async () => {
       await request.delete(`/api/births/${birth.birthId}`)
         .use(utils.setUserSession(user))
