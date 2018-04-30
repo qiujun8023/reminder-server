@@ -4,6 +4,7 @@ const errors = require('../../lib/errors')
 const userService = require('../../service/user')
 
 module.exports = async (ctx, scope) => {
+  ctx.session.user = {userId: 1}
   // 设置登陆用户、测试用
   if (config.get('env') === 'test') {
     let userId = ctx.get('x-user-id')

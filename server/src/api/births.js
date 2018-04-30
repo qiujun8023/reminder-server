@@ -3,6 +3,12 @@ const _ = require('lodash')
 const utils = require('../lib/utils')
 const errors = require('../lib/errors')
 const birthService = require('../service/birth')
+const settingService = require('../service/setting')
+
+const DEFAULT_SETTING = {
+  advance: 0,
+  time: '12:00'
+}
 
 let getAndCheckAsync = async (userId, birthId) => {
   let birth = await birthService.getAsync(birthId)
@@ -29,10 +35,15 @@ module.exports = {
   async create (ctx) {
     let { userId } = ctx.session.user
 
-    let filter = ['title', 'type', 'date']
+    let filter = ['title', 'type', 'date', 'color']
     let data = Object.assign({ userId }, _.pick(ctx.request.body, filter))
 
-    ctx.body = await birthService.createAsync(data)
+    let birth = await birthService.createAsync(data)
+    await settingService.createAsync(Object.assign({
+      birthId: birth.birthId
+    }, DEFAULT_SETTING))
+
+    ctx.body = birth
     ctx.status = 201
   },
 
@@ -40,7 +51,7 @@ module.exports = {
     let { userId } = ctx.session.user
     let { birthId } = ctx.params
 
-    let filter = ['title', 'type', 'date']
+    let filter = ['title', 'type', 'date', 'color']
     let data = _.pick(ctx.request.body, filter)
 
     await getAndCheckAsync(userId, birthId)

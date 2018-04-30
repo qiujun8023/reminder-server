@@ -30,6 +30,7 @@ post:
           - title
           - type
           - date
+          - color
         properties:
           title:
             type: string
@@ -45,6 +46,10 @@ post:
             type: string
             example: "2018-01-01"
             description: 日期
+          color:
+            type: string
+            example: "#FFFFFF"
+            description: 颜色
   responses:
     201:
       description: 生日

@@ -50,6 +50,10 @@ put:
             type: string
             example: "2018-01-01"
             description: 日期
+          color:
+            type: string
+            example: "#FFFFFF"
+            description: 颜色
   responses:
     200:
       description: 生日
