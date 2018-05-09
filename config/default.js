@@ -42,8 +42,6 @@ module.exports = {
     corpId: 'wx4e2c2b771c467c9f',
     secret: 'k7TGD8xJLDU6-sPH3NwY0eTs2oBPyAINMdbSbGN80fuEt01UK0Z8dWzhm7crgkz7',
     agentId: 0,
-    token: 'mRoQySqj2XBEORdnuOh9wei17',
-    aesKey: '6mRfWp9o1dfXHnmRBCFmTlpM3IIY377wy2iDJJjx4lM',
     bgImage: 'https://cdn.qiujun.me/images/birthday/cover.png!birthday.wechat'
   }
 }
