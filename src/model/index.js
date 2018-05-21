@@ -26,11 +26,11 @@ Setting.belongsTo(Birth, {
 
 // 生日与提醒的关系
 Birth.hasMany(Remind, {
-  foreignKey: 'settingId',
+  foreignKey: 'birthId',
   constraints: false
 })
 Remind.belongsTo(Birth, {
-  foreignKey: 'settingId',
+  foreignKey: 'birthId',
   constraints: false
 })
 
