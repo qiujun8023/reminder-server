@@ -1,4 +1,4 @@
-#### 项目状态
+### 项目状态
 
 ##### Master
 
@@ -12,52 +12,101 @@
 [![Coverage Status](https://coveralls.io/repos/github/qious/birthday/badge.svg?branch=develop)](https://coveralls.io/github/qious/birthday?branch=develop)
 
 
-### **线上运行**
+### 项目介绍
 
-```bash
-cd /path/to/birthday/server/
-npm install
-cp config/default.js config/local.js # 修改配置文件
-npm run start
-```
+##### 用途
 
-### **协作开发**
+> 使用 微信企业号/企业微信 生日提醒
 
-```bash
-# 后端开发
-cd /path/to/birthday/server
-npm install
-npm run dev
+##### 依赖
 
-# 前端开发
-cd /path/to/birthday/client
-npm install
-npm run dev
-```
+* Node.js >= 7.6.0
+* MySQL
+* Redis
 
-#### **单元测试**
+##### 特性
 
-```bash
-cd /path/to/birthday/server
-npm run test                # 运行所有测试
-npm run test -- -g network  # 只测试 network
-```
+* 基于微信企业号/企业微信授权登录
+* 新用户授权登录自动分配帐号信息
+* 自定义提醒提前天数、提醒时间
 
-### **效果展示**
-
-
-#### 生日列表
+##### 演示
 
 ![生日列表](screenshot/1.png)
 
-#### 生日详情
-
 ![生日详情](screenshot/2.png)
-
-#### 微信生日列表
 
 ![微信生日列表](screenshot/3.png)
 
-#### 生日提醒
-
 ![生日提醒](screenshot/4.png)
+
+#### 常规运行
+
+##### 下载或clone代码到任意目录
+
+```bash
+git clone https://github.com/qious/birthday.git
+```
+
+##### 安装依赖
+
+```bash
+cd /path/to/birthday/server
+npm i
+sudo npm i -g pm2
+```
+
+##### 复制并修改配置文件
+
+```bash
+cd /path/to/birthday/server
+cp ./config/default.js ./config/local.js
+vim ./config/local.js # 根据自身需要修改配置文件
+```
+
+##### 测试运行
+
+```bash
+cd /path/to/birthday/server
+npm run dev # 如无报错后可进入下一步
+```
+
+##### 正式运行
+
+```bash
+cd /path/to/birthday/server
+npm run pm2.start
+```
+
+### 进阶配置
+
+##### 使用 Nginx 处理静态资源，Nginx示例配置如下
+
+```nginx
+upstream birthday {
+    server 127.0.0.1:8000;
+}
+
+server {
+    listen 80;
+    server_name birthday.example.com;
+
+    root /path/to/birthday/client/dist;
+    index index.htm index.html;
+
+    location /api {
+        include proxy_params;
+        proxy_pass http://birthday/api;
+    }
+
+    # 根据需要取消注释
+    # location /doc {
+    #     include proxy_params;
+    #     proxy_pass http://birthday/doc;
+    # }
+
+    location /static {
+        expires 7d;
+    }
+}
+```
