@@ -8,9 +8,9 @@ module.exports = {
 
   server: {
     host: '127.0.0.1',
-    port: 8000,
+    port: 8000, // 服务端口
     clientPath: path.join(__dirname, '../../client/dist'),
-    baseUrl: 'http://localhost:8000/'
+    baseUrl: 'http://localhost:8000/' // 对外地址信息
   },
 
   keys: [
@@ -25,23 +25,23 @@ module.exports = {
   },
 
   redis: {
-    host: 'localhost',
-    port: 6379,
-    keyPrefix: 'birthday:'
+    host: 'localhost', // Redis 地址
+    port: 6379, // Redis 端口
+    keyPrefix: 'birthday:' // Redis 前缀，一般不用修改
   },
 
   mysql: {
-    host: 'localhost',
-    user: 'birthday',
-    password: 'password',
-    database: 'birthday',
-    timezone: 'Asia/Shanghai'
+    host: 'localhost', // 数据库地址
+    user: 'birthday', // 数据库用户名
+    password: 'password', // 数据库密码
+    database: 'birthday', // 数据库库名
+    timezone: 'Asia/Shanghai' // 时区
   },
 
   wechat: {
-    corpId: 'wx4e2c2b771c467c9f',
+    corpId: 'wx4e2c2b771c467c9f', // 微信企业号/企业微信 的 corpId
     secret: 'k7TGD8xJLDU6-sPH3NwY0eTs2oBPyAINMdbSbGN80fuEt01UK0Z8dWzhm7crgkz7',
-    agentId: 0,
-    bgImage: 'https://cdn.qiujun.me/images/birthday/cover.png!birthday.wechat'
+    agentId: 0, // 应用 ID
+    bgImage: 'https://cdn.qiujun.me/images/birthday/cover.png!birthday.wechat' // 微信消息图封面
   }
 }
