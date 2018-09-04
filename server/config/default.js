@@ -42,6 +42,6 @@ module.exports = {
     corpId: 'wx4e2c2b771c467c9f', // 微信企业号/企业微信 的 corpId
     secret: 'k7TGD8xJLDU6-sPH3NwY0eTs2oBPyAINMdbSbGN80fuEt01UK0Z8dWzhm7crgkz7',
     agentId: 0, // 应用 ID
-    bgImage: 'https://cdn.qiujun.me/images/birthday/cover.png!birthday.wechat' // 微信消息图封面
+    bgImage: 'https://cdn.qiujun.me/image/2018/09/04/06c2d3f70e6fed342e2eb43bce55fb43.png!/both/720x400' // 微信消息图封面
   }
 }
