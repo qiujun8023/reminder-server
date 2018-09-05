@@ -8,7 +8,7 @@ const BASE_URL = config.get('server.baseUrl')
 const BG_IMAGE = config.get('wechat.bgImage')
 
 exports._getBirthUrl = (birth) => {
-  return _.trimEnd(BASE_URL, '/') + '/' + birth.birthId
+  return _.trimEnd(BASE_URL, '/') + '/#/' + birth.birthId
 }
 
 exports._getOneBirthRemindArticles = (birth) => {
