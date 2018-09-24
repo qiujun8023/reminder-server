@@ -1,0 +1,27 @@
+language: node_js
+
+node_js:
+  - "lts/*"
+
+services:
+  - mysql
+  - redis-server
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install -q
+
+before_script:
+  - mysql -e 'CREATE DATABASE birthday;'
+  - cp config/travis_ci.js config/local.js
+
+script:
+  - npm run eslint
+  - npm run test
+
+after_success:
+  - npm install coveralls
+  - cat ./coverage/lcov.info | coveralls
