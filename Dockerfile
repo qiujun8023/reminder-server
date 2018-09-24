@@ -10,6 +10,8 @@ COPY config ${APP_ROOT}/config/
 
 RUN npm install
 
+RUN wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && chmod 755 wait-for-it.sh
+
 EXPOSE 8000
 
 CMD ["node", "index.js"]
