@@ -1,36 +1,26 @@
-### 项目状态
+# 生日管家
 
-##### Master
+## 说明
 
-[![Build Status](https://travis-ci.org/qious/birthday.svg?branch=master)](https://travis-ci.org/qious/birthday)
-[![Coverage Status](https://coveralls.io/repos/github/qious/birthday/badge.svg?branch=master)](https://coveralls.io/github/qious/birthday?branch=master)
+### 状态
 
+#### Master
 
-##### Develop
+[![Build Status](https://travis-ci.org/qious/birthday-server.svg?branch=master)](https://travis-ci.org/qious/birthday-server)
+[![Coverage Status](https://coveralls.io/repos/github/qious/birthday-server/badge.svg?branch=master)](https://coveralls.io/github/qious/birthday-server?branch=master)
 
-[![Build Status](https://travis-ci.org/qious/birthday.svg?branch=develop)](https://travis-ci.org/qious/birthday)
-[![Coverage Status](https://coveralls.io/repos/github/qious/birthday/badge.svg?branch=develop)](https://coveralls.io/github/qious/birthday?branch=develop)
+#### Develop
 
+[![Build Status](https://travis-ci.org/qious/birthday-server.svg?branch=develop)](https://travis-ci.org/qious/birthday-server)
+[![Coverage Status](https://coveralls.io/repos/github/qious/birthday-server/badge.svg?branch=develop)](https://coveralls.io/github/qious/birthday-server?branch=develop)
 
-### 项目介绍
+### 特性
 
-##### 用途
+- 基于微信企业号/企业微信授权登录
+- 新用户授权登录自动分配帐号信息
+- 自定义提醒提前天数、提醒时间
 
-> 使用 微信企业号/企业微信 生日提醒
-
-##### 依赖
-
-* Node.js >= 7.6.0
-* MySQL
-* Redis
-
-##### 特性
-
-* 基于微信企业号/企业微信授权登录
-* 新用户授权登录自动分配帐号信息
-* 自定义提醒提前天数、提醒时间
-
-##### 演示
+### 截图
 
 ![生日列表](https://cdn.qiujun.me/image/2018/09/24/c593040463273efb868cb02cbbe92062.png)
 
@@ -40,73 +30,87 @@
 
 ![生日提醒](https://cdn.qiujun.me/image/2018/09/24/3f4ce9a24185bc995fd9bdb353c33409.png)
 
-#### 部署运行
+## 部署
 
-##### 下载或clone代码到任意目录
+### 使用 Docker + Docker Compose 部署
 
-```bash
-git clone https://github.com/qious/birthday.git
-```
-
-##### 安装依赖
+- 获取工具文件（docker-compose.yml中用到）
 
 ```bash
-cd /path/to/birthday/server
-npm i
-sudo npm i -g pm2
+wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+chmod 755 wait-for-it.sh
 ```
 
-##### 复制并修改配置文件
+- 配置 docker-compose.yml
 
 ```bash
-cd /path/to/birthday/server
-cp ./config/default.js ./config/local.js
-vim ./config/local.js # 根据自身需要修改配置文件
+cat > ./docker-compose.yml << \EOF
+version: '3'
+services:
+  redis:
+    image: redis:3
+    restart: always
+    volumes:
+      - "./redis:/data"
+  mysql:
+    image: dnhsoft/mysql-utf8:5.7
+    restart: always
+    volumes:
+      - "./mysql:/var/lib/mysql"
+    environment:
+      MYSQL_DATABASE: birthday
+      MYSQL_USER: birthday
+      MYSQL_PASSWORD: password
+  server:
+    image: qious/birthday-server
+    restart: always
+    depends_on:
+      - redis
+      - mysql
+    environment:
+      APP_DEBUG: 'true'
+      APP_SERVER_BASE_URL: http://example.com/
+      APP_KEYS_1: im a newer secret
+      APP_KEYS_2: i like turtle
+      APP_REDIS_HOST: redis
+      APP_REDIS_PORT: 6379
+      APP_REDIS_KEY_PREFIX: 'birthday:'
+      APP_MYSQL_HOST: mysql
+      APP_MYSQL_PORT: 3306
+      APP_MYSQL_USER: birthday
+      APP_MYSQL_PASSWORD: password
+      APP_MYSQL_DATABASE: birthday
+      APP_MYSQL_TIMEZONE: 'Asia/Shanghai'
+      APP_WECHAT_CORP_ID: wx4e2c2b771c467c9f
+      APP_WECHAT_AGENT_ID: 0
+      APP_WECHAT_SECRET: secret
+      APP_WECHAT_BG_IMAGE: https://cdn.qiujun.me/image/2018/09/04/06c2d3f70e6fed342e2eb43bce55fb43.png!/both/720x400
+    volumes:
+      - "./wait-for-it.sh:/app/wait-for-it.sh"
+    command: ["./wait-for-it.sh", "-t", "0", "mysql:3306", "--", "node", "index.js"]
+  client:
+    image: qious/birthday-client
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - server
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "127.0.0.1:9999:80"
+    environment:
+      - PMA_HOST=mysql
+EOF
 ```
 
-##### 测试运行
-
+- 运行
 ```bash
-cd /path/to/birthday/server
-npm run dev # 如无报错后可进入下一步
+docker-compose up -d
 ```
 
-##### 正式运行
-
-```bash
-cd /path/to/birthday/server
-npm run pm2.start
+- 访问
 ```
-
-### 进阶配置
-
-##### 使用 Nginx 处理静态资源，Nginx示例配置如下
-
-```nginx
-upstream birthday {
-    server 127.0.0.1:8000;
-}
-
-server {
-    listen 80;
-    server_name birthday.example.com;
-
-    root /path/to/birthday/client/dist;
-    index index.htm index.html;
-
-    location /api {
-        include proxy_params;
-        proxy_pass http://birthday/api;
-    }
-
-    # 根据需要取消注释
-    # location /doc {
-    #     include proxy_params;
-    #     proxy_pass http://birthday/doc;
-    # }
-
-    location /static {
-        expires 7d;
-    }
-}
+curl http://localhost:8888
 ```
