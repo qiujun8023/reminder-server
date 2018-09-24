@@ -1,5 +1,3 @@
-const path = require('path')
-
 const pkg = require('../package')
 
 module.exports = {
@@ -9,7 +7,6 @@ module.exports = {
   server: {
     host: '127.0.0.1',
     port: 8000, // 服务端口
-    clientPath: path.join(__dirname, '../../client/dist'),
     baseUrl: 'http://localhost:8000/' // 对外地址信息
   },
 
@@ -32,6 +29,7 @@ module.exports = {
 
   mysql: {
     host: 'localhost', // 数据库地址
+    port: 3306, // 数据库端口
     user: 'birthday', // 数据库用户名
     password: 'password', // 数据库密码
     database: 'birthday', // 数据库库名

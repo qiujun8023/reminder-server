@@ -3,9 +3,13 @@ language: node_js
 node_js:
   - "lts/*"
 
+env:
+  - PACKAGE_VERSION=$(npm --loglevel silent run version)
+
 services:
   - mysql
   - redis-server
+  - docker
 
 cache:
   directories:
@@ -21,7 +25,11 @@ before_script:
 script:
   - npm run eslint
   - npm run test
-
-after_success:
   - npm install coveralls
   - cat ./coverage/lcov.info | coveralls
+
+after_success:
+  - cp config/docker.js config/local.js
+  - docker build -t $DOCKER_REPOSITORY:$PACKAGE_VERSION -t $DOCKER_REPOSITORY:latest .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push $DOCKER_REPOSITORY

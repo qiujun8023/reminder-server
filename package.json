@@ -1,6 +1,7 @@
 {
   "name": "birthday",
   "version": "0.4.1",
+  "private": true,
   "engines": {
     "node": ">=7.6.0"
   },
@@ -9,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qious/birthday.git"
+    "url": "https://github.com/qious/birthday-server.git"
   },
   "scripts": {
     "dev": "nodemon -e js,yaml src/index.js",
@@ -43,7 +44,6 @@
     "koa-generic-session": "^2.0.1",
     "koa-redis": "^3.1.2",
     "koa-router": "^7.4.0",
-    "koa-static": "^4.0.2",
     "koa2-swagger-ui": "^2.7.1",
     "lodash": "^4.17.5",
     "moment": "^2.22.1",
