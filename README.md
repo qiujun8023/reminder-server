@@ -92,16 +92,9 @@ services:
     image: qious/birthday-client
     restart: always
     ports:
-      - "8080:80"
+      - "8888:80"
     depends_on:
       - server
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - "127.0.0.1:9999:80"
-    environment:
-      - PMA_HOST=mysql
 EOF
 ```
 
@@ -114,3 +107,25 @@ docker-compose up -d
 ```
 curl http://localhost:8888
 ```
+
+## 配置文件说明
+
+| 字段   | 描述   |
+|:----|:----|
+| APP_DEBUG   | 调试模式   |
+| APP_SERVER_BASE_URL   | 外部访问地址，形如 https://example.com/   |
+| APP_KEYS_1   | 用来加密 Cookie 的随机字符串   |
+| APP_KEYS_2   | 用来加密 Cookie 的随机字符串   |
+| APP_REDIS_HOST   | Redis 地址   |
+| APP_REDIS_PORT   | Redis 端口   |
+| APP_REDIS_KEY_PREFIX   | Redis 键前缀   |
+| APP_MYSQL_HOST   | MySQL 地址   |
+| APP_MYSQL_PORT   | MySQL 端口   |
+| APP_MYSQL_USER   | MySQL 用户名   |
+| APP_MYSQL_PASSWORD   | MYSQL 密码   |
+| APP_MYSQL_DATABASE   | MySQL 数据库名   |
+| APP_MYSQL_TIMEZONE   | MySQL 时区   |
+| APP_WECHAT_CORP_ID   | 微信 cropId   |
+| APP_WECHAT_AGENT_ID   | 微信 agentId   |
+| APP_WECHAT_SECRET   | 微信 secret   |
+| APP_WECHAT_BG_IMAGE   | 推送生日提醒图文消息时的图片地址   |
