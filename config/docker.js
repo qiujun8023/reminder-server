@@ -5,6 +5,7 @@ module.exports = {
   server: {
     host: '0.0.0.0',
     port: 8000,
+    timezone: process.env.APP_SERVER_TIMEZONE || 'Asia/Shanghai',
     baseUrl: process.env.APP_SERVER_BASE_URL || 'http://localhost:8000/'
   },
 
@@ -24,14 +25,13 @@ module.exports = {
     port: Number(process.env.APP_MYSQL_PORT || 3306),
     user: process.env.APP_MYSQL_USER || 'root',
     password: process.env.APP_MYSQL_PASSWORD || 'root',
-    database: process.env.APP_MYSQL_DATABASE || 'birthday',
-    timezone: process.env.APP_MYSQL_TIMEZONE || 'Asia/Shanghai'
+    database: process.env.APP_MYSQL_DATABASE || 'birthday'
   },
 
   wechat: {
     corpId: process.env.APP_WECHAT_CORP_ID || 'corp id',
     secret: process.env.APP_WECHAT_SECRET || 'secret',
     agentId: Number(process.env.APP_WECHAT_AGENT_ID || 0),
-    bgImage: process.env.APP_WECHAT_BG_IMAGE || 'https://cdn.qiujun.me/image/2018/09/04/06c2d3f70e6fed342e2eb43bce55fb43.png!/both/720x400' // 微信消息图封面
+    bgImage: process.env.APP_WECHAT_BG_IMAGE || 'https://cdn.qiujun.me/image/2018/09/04/06c2d3f70e6fed342e2eb43bce55fb43.png!/both/720x400'
   }
 }
