@@ -4,6 +4,9 @@ const app = require('./app')
 const cron = require('./cron')
 const logger = require('./lib/logger')
 
+// 设置时区
+process.env.TZ = config.get('server.timezone')
+
 // 启动 Web 服务
 let serverConfig = config.get('server')
 app.listen(serverConfig.port, serverConfig.host, () => {
