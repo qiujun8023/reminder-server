@@ -12,5 +12,5 @@ module.exports = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlConf
 
   operatorsAliases: false,
   logging: (sql) => logger.debug(sql),
-  timezone: config.get('server.timezone')
+  timezone: process.env.TZ || '+00:00'
 })
