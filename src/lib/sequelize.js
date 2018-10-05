@@ -1,4 +1,5 @@
 const config = require('config')
+const moment = require('moment')
 const Sequelize = require('sequelize')
 
 const logger = require('./logger')
@@ -12,5 +13,5 @@ module.exports = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlConf
 
   operatorsAliases: false,
   logging: (sql) => logger.debug(sql),
-  timezone: process.env.TZ || '+00:00'
+  timezone: moment().format('Z')
 })
