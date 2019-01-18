@@ -5,7 +5,7 @@ exports.createAsync = async (data) => {
 }
 
 exports.getAsync = async (settingId) => {
-  return Setting.findById(settingId)
+  return Setting.findByPk(settingId)
 }
 
 exports.findByBirthIdAsync = async (birthId) => {
@@ -15,7 +15,7 @@ exports.findByBirthIdAsync = async (birthId) => {
 }
 
 exports.updateAsync = async (settingId, data) => {
-  let setting = await Setting.findById(settingId)
+  let setting = await Setting.findByPk(settingId)
   if (!setting) {
     return false
   }
@@ -24,7 +24,7 @@ exports.updateAsync = async (settingId, data) => {
 }
 
 exports.removeWithRemindAsync = async (settingId) => {
-  let setting = await Setting.findById(settingId)
+  let setting = await Setting.findByPk(settingId)
   if (!setting) {
     return false
   }

@@ -52,7 +52,7 @@
     "pino": "^4.16.1",
     "sequelize": "^4.37.6",
     "solarlunar": "^2.0.2",
-    "sway": "^1.0.0",
+    "sway": "^2.0.5",
     "wechat-enterprise-api": "git+https://github.com/qious/wechat-enterprise-api.git"
   }
 }
