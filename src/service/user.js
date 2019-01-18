@@ -6,7 +6,7 @@ exports.createAsync = async (data) => {
 }
 
 exports.getAsync = async (userId) => {
-  return User.findById(userId)
+  return User.findByPk(userId)
 }
 
 exports.getByUserNameAsync = async (username) => {
@@ -16,7 +16,7 @@ exports.getByUserNameAsync = async (username) => {
 }
 
 exports.updateAsync = async (userId, data) => {
-  let user = await User.findById(userId)
+  let user = await User.findByPk(userId)
   if (!user) {
     return false
   }
@@ -25,7 +25,7 @@ exports.updateAsync = async (userId, data) => {
 }
 
 exports.removeWithBirthAsync = async (userId) => {
-  let user = await User.findById(userId)
+  let user = await User.findByPk(userId)
   if (!user) {
     return false
   }

@@ -6,7 +6,7 @@ exports.createAsync = async (data) => {
 }
 
 exports.getAsync = async (birthId) => {
-  return Birth.findById(birthId)
+  return Birth.findByPk(birthId)
 }
 
 exports.findByUserIdAsync = async (userId) => {
@@ -16,7 +16,7 @@ exports.findByUserIdAsync = async (userId) => {
 }
 
 exports.updateAsync = async (birthId, data) => {
-  let birth = await Birth.findById(birthId)
+  let birth = await Birth.findByPk(birthId)
   if (!birth) {
     return false
   }
@@ -25,7 +25,7 @@ exports.updateAsync = async (birthId, data) => {
 }
 
 exports.removeWithSettingAsync = async (birthId) => {
-  let birth = await Birth.findById(birthId)
+  let birth = await Birth.findByPk(birthId)
   if (!birth) {
     return false
   }

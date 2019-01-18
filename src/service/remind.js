@@ -12,7 +12,7 @@ exports.findAsync = async (where) => {
 }
 
 exports.updateAsync = async (remindId, data) => {
-  let remind = await Remind.findById(remindId)
+  let remind = await Remind.findByPk(remindId)
   if (!remind) {
     return false
   }
