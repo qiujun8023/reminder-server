@@ -7,6 +7,7 @@ import { ServerConfig } from './interfaces/server-config.interface';
 import { LoggerConfig } from './interfaces/logger-config.interface';
 import { MySQLConfig } from './interfaces/mysql-config.interface';
 import { WechatConfig } from './interfaces/wechat-config.interface';
+import { PackageConfig } from './interfaces/package-config.interface';
 
 @Injectable()
 export class ConfigService {
@@ -16,7 +17,7 @@ export class ConfigService {
     this.config = {
       env: nodeConfig.get('env'),
       debug: Boolean(nodeConfig.get('debug')),
-      version: this.getVersion(),
+      package: this.getPackageConfig(),
       server: nodeConfig.get('server'),
       logger: nodeConfig.get('logger'),
       mysql: nodeConfig.get('mysql'),
@@ -28,8 +29,12 @@ export class ConfigService {
     return this.config.env;
   }
 
-  get isDebug(): boolean {
+  get debug(): boolean {
     return this.config.debug;
+  }
+
+  get package(): PackageConfig {
+    return this.config.package;
   }
 
   get server(): ServerConfig {
@@ -48,9 +53,14 @@ export class ConfigService {
     return this.config.wechat;
   }
 
-  private getVersion(): string {
+  private getPackageConfig(): PackageConfig {
     const pkgPath = path.join(process.cwd(), 'package.json');
     const pkgContent = fs.readFileSync(pkgPath, 'utf-8');
-    return JSON.parse(pkgContent).version;
+    const pkg = JSON.parse(pkgContent);
+    return {
+      name: pkg.name,
+      description: pkg.description,
+      version: pkg.version,
+    };
   }
 }
