@@ -1,0 +1,31 @@
+language: node_js
+
+node_js:
+  - "8"
+
+env:
+  - APP_VERSION=$(npm --loglevel silent run version)
+
+services:
+  - docker
+
+before_script:
+  - docker build -t $DOCKER_REPOSITORY:$APP_VERSION -t $DOCKER_REPOSITORY:latest .
+
+script:
+  - docker run -ti $DOCKER_REPOSITORY npm run lint
+
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+deploy:
+  - provider: script
+    script: docker push $DOCKER_REPOSITORY
+    on:
+      branch:
+        - master
+  - provider: script
+    script: docker push $DOCKER_REPOSITORY:$APP_VERSION
+    on:
+      branch:
+        - develop
