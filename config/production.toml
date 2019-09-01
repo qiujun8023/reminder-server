@@ -1,0 +1,5 @@
+env = 'production'
+debug = false
+
+[logger]
+level = 'info'

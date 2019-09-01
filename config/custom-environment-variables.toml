@@ -1,0 +1,27 @@
+env = 'APP_ENV'
+debug = { __name = 'APP_DEBUG', __format = 'json' }
+
+[logger]
+level = 'APP_LOGGER_LEVEL'
+
+[server]
+host = 'APP_SERVER_HOST'
+port = { __name = 'APP_SERVER_PORT', __format = 'json' }
+baseUrl = 'APP_SERVER_BASE_URL'
+
+[redis]
+host = 'APP_REDIS_HOST'
+port = { __name = 'APP_REDIS_PORT', __format = 'json' }
+keyPrefix = 'APP_REDIS_KEY_PREFIX'
+
+[mysql]
+host = 'APP_MYSQL_HOST'
+port = { __name = 'APP_MYSQL_PORT', __format = 'json' }
+username = 'APP_MYSQL_USERNAME'
+password = 'APP_MYSQL_PASSWORD'
+database = 'APP_MYSQL_DATABASE'
+
+[wechat]
+corpId = 'APP_WECHAT_CORP_ID'
+agentId = { __name = 'APP_WECHAT_AGENT_ID', __format = 'json' }
+secret = 'APP_WECHAT_SECRET'
