@@ -2,12 +2,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as nodeConfig from 'config';
 import { Injectable } from '@nestjs/common';
-import { Config } from './interfaces/config.interface';
-import { ServerConfig } from './interfaces/server-config.interface';
-import { LoggerConfig } from './interfaces/logger-config.interface';
-import { MySQLConfig } from './interfaces/mysql-config.interface';
-import { WechatConfig } from './interfaces/wechat-config.interface';
-import { PackageConfig } from './interfaces/package-config.interface';
+import { Config } from '../interfaces/config.interface';
+import { ServerConfig } from '../interfaces/server-config.interface';
+import { LoggerConfig } from '../interfaces/logger-config.interface';
+import { MySQLConfig } from '../interfaces/mysql-config.interface';
+import { WechatConfig } from '../interfaces/wechat-config.interface';
+import { PackageConfig } from '../interfaces/package-config.interface';
+import { RedisConfig } from '../interfaces/redis-config.interface';
 
 @Injectable()
 export class ConfigService {
@@ -21,6 +22,7 @@ export class ConfigService {
       server: nodeConfig.get('server'),
       logger: nodeConfig.get('logger'),
       mysql: nodeConfig.get('mysql'),
+      redis: nodeConfig.get('redis'),
       wechat: nodeConfig.get('wechat'),
     };
   }
@@ -43,6 +45,10 @@ export class ConfigService {
 
   get logger(): LoggerConfig {
     return this.config.logger;
+  }
+
+  get redis(): RedisConfig {
+    return this.config.redis;
   }
 
   get mysql(): MySQLConfig {

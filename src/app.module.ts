@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from './config/config.module';
 import { WechatModule } from './wechat/wechat.module';
 import { ReminderModule } from './reminder/reminder.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
-  imports: [ConfigModule, WechatModule, ReminderModule],
+  imports: [WechatModule, ReminderModule, CommonModule],
   controllers: [],
   providers: [],
 })
