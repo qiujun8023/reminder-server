@@ -1,5 +1,5 @@
-import * as IORedis from 'ioredis';
 import { Injectable } from '@nestjs/common';
+import * as IORedis from 'ioredis';
 import { ConfigService } from '../service/config.service';
 
 @Injectable()

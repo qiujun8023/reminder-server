@@ -1,8 +1,8 @@
-import { Controller, Get, Logger, Inject, Req } from '@nestjs/common';
+import { Controller, Get, Inject, Logger, Req } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { SWAGGER_TAG_REMINDER } from '../common/constants';
 import { RedisService } from '../common/service/redis.service';
-import { Request } from 'express';
 
 @Controller('/')
 @ApiUseTags(SWAGGER_TAG_REMINDER)

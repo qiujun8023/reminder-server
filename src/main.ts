@@ -1,18 +1,18 @@
-import * as cookieParser from 'cookie-parser';
-import * as expressSession from 'express-session';
-import * as expressRedis from 'connect-redis';
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as expressRedis from 'connect-redis';
+import * as cookieParser from 'cookie-parser';
+import * as expressSession from 'express-session';
 import { AppModule } from './app.module';
-import { ConfigService } from './common/service/config.service';
-import { ServerConfig } from './common/interface/server-config.interface';
-import { PackageConfig } from './common/interface/package-config.interface';
 import {
   API_BASE_PATH,
-  SWAGGER_TAG_WECHAT,
   SWAGGER_TAG_REMINDER,
+  SWAGGER_TAG_WECHAT,
 } from './common/constants';
+import { PackageConfig } from './common/interface/package-config.interface';
+import { ServerConfig } from './common/interface/server-config.interface';
+import { ConfigService } from './common/service/config.service';
 import { RedisService } from './common/service/redis.service';
 
 async function bootstrap() {
