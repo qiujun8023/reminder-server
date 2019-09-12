@@ -2,13 +2,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as nodeConfig from 'config';
 import { Injectable } from '@nestjs/common';
-import { Config } from '../interfaces/config.interface';
-import { ServerConfig } from '../interfaces/server-config.interface';
-import { LoggerConfig } from '../interfaces/logger-config.interface';
-import { MySQLConfig } from '../interfaces/mysql-config.interface';
-import { WechatConfig } from '../interfaces/wechat-config.interface';
-import { PackageConfig } from '../interfaces/package-config.interface';
-import { RedisConfig } from '../interfaces/redis-config.interface';
+import { Config } from '../interface/config.interface';
+import { ServerConfig } from '../interface/server-config.interface';
+import { LoggerConfig } from '../interface/logger-config.interface';
+import { MySQLConfig } from '../interface/mysql-config.interface';
+import { WechatConfig } from '../interface/wechat-config.interface';
+import { PackageConfig } from '../interface/package-config.interface';
+import { RedisConfig } from '../interface/redis-config.interface';
 
 @Injectable()
 export class ConfigService {

@@ -6,8 +6,8 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { ConfigService } from './common/service/config.service';
-import { ServerConfig } from './common/interfaces/server-config.interface';
-import { PackageConfig } from './common/interfaces/package-config.interface';
+import { ServerConfig } from './common/interface/server-config.interface';
+import { PackageConfig } from './common/interface/package-config.interface';
 import {
   API_BASE_PATH,
   SWAGGER_TAG_WECHAT,
