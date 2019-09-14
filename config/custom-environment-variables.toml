@@ -7,7 +7,7 @@ level = 'APP_LOGGER_LEVEL'
 [server]
 host = 'APP_SERVER_HOST'
 port = { __name = 'APP_SERVER_PORT', __format = 'json' }
-baseUrl = 'APP_SERVER_BASE_URL'
+baseURL = 'APP_SERVER_BASE_URL'
 
 [redis]
 host = 'APP_REDIS_HOST'

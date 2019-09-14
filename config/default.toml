@@ -4,7 +4,7 @@ debug = true
 [server]
 host = 'localhost'
 port = 3000
-baseUrl = 'http://localhost:3000/'
+baseURL = 'http://localhost:3000/'
 
 [logger]
 level = 'debug'
@@ -12,14 +12,14 @@ level = 'debug'
 [redis]
 host = 'localhost'
 port = 6379
-keyPrefix = 'v2ray:'
+keyPrefix = 'reminder:'
 
 [mysql]
 host = 'localhost'
 port = 3306
 username = 'root'
 password = 'root'
-database = 'v2ray'
+database = 'reminder'
 
 [wechat]
 corpId = 'wx4e2c2b771c467c9f'

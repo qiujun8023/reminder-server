@@ -1,8 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ConfigService } from '../../common/service/config.service';
-import { RedisService } from '../../common/service/redis.service';
-import { AccessTokenDTO } from './dto/access-token.dto';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import { ConfigService } from '../../../common/service/config.service';
+import { RedisService } from '../../../common/service/redis.service';
 import { HTTPClientService } from './http-client.service';
+import { AccessTokenDTO } from './dto/access-token.dto';
 
 @Injectable()
 export class AccessTokenService {
@@ -12,15 +12,13 @@ export class AccessTokenService {
   @Inject()
   private readonly redisService: RedisService;
 
-  @Inject()
+  @Inject(forwardRef(() => HTTPClientService))
   private readonly httpClientService: HTTPClientService;
 
-  protected readonly accessTokenSafeSeconds = 500;
-  protected readonly accessTokenCacheKey = 'access-toekn';
+  private readonly accessTokenSafeSeconds = 500;
+  private readonly accessTokenCacheKey = 'wechat:access-toekn';
 
-  public async getAccessToken(
-    refresh: boolean = false,
-  ): Promise<AccessTokenDTO> {
+  public async getAccessToken(refresh: boolean = false): Promise<AccessTokenDTO> {
     const cachedAccessTokenString = await this.redisService.get(
       this.accessTokenCacheKey,
     );
@@ -31,6 +29,10 @@ export class AccessTokenService {
     const requestedAccessToken = await this.requestToken();
     await this.setToken(requestedAccessToken);
     return requestedAccessToken;
+  }
+
+  public async refreshAccessToken(): Promise<AccessTokenDTO> {
+    return this.getAccessToken(true);
   }
 
   public async setToken(accessToken: AccessTokenDTO): Promise<boolean> {
