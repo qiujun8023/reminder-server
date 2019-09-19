@@ -95,11 +95,6 @@ describe('lib/utils', () => {
       let res = utils.getLunarCountdown(today, tomorrow)
       expect(res).to.equal(1)
     })
-
-    it('should return the length of this year', () => {
-      let res = utils.getSolarCountdowm(today, yesterday)
-      expect(res).to.equal(nMement.isLeapYear() ? 365 : 364)
-    })
   })
 
   describe('getLunarCountdown', () => {
