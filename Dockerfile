@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:10
 
 ENV APP_ROOT /app
 ENV NODE_ENV production

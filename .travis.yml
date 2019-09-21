@@ -29,8 +29,3 @@ deploy:
     on:
       branch:
         - master
-  - provider: script
-    script: docker push $DOCKER_REPOSITORY:$APP_VERSION
-    on:
-      branch:
-        - develop
