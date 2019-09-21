@@ -24,6 +24,7 @@ before_deploy:
   - docker build -t $DOCKER_REPOSITORY:$APP_VERSION -t $DOCKER_REPOSITORY:latest .
 
 deploy:
+  skip_cleanup: true
   - provider: script
     script: docker push $DOCKER_REPOSITORY
     on:
