@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import * as nodeConfig from 'config';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as nodeConfig from 'config';
+import { Injectable } from '@nestjs/common';
 import { Config } from '../interface/config.interface';
 import { LoggerConfig } from '../interface/logger-config.interface';
 import { MySQLConfig } from '../interface/mysql-config.interface';

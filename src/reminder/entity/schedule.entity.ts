@@ -1,23 +1,23 @@
 import {
-  Column,
-  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { Moment } from './moment.entity';
 
 @Entity()
-export class User {
+export class Schedule {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
-  username: string;
-
   @Column()
-  nickname: string;
+  advance: number;
+
+  @Column({ type: 'time' })
+  time: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -25,6 +25,6 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(type => Moment, moment => moment.user)
-  moments: Moment[];
+  @ManyToOne(type => Moment, moment => moment.schedules)
+  moment: Moment;
 }

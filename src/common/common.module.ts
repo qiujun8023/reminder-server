@@ -5,7 +5,13 @@ import { RedisService } from './service/redis.service';
 @Global()
 @Module({
   imports: [],
-  providers: [ConfigService, RedisService],
-  exports: [ConfigService, RedisService],
+  providers: [
+    ConfigService,
+    RedisService,
+  ],
+  exports: [
+    ConfigService,
+    RedisService,
+  ],
 })
 export class CommonModule {}

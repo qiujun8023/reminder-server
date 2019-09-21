@@ -12,6 +12,7 @@ baseURL = 'APP_SERVER_BASE_URL'
 [redis]
 host = 'APP_REDIS_HOST'
 port = { __name = 'APP_REDIS_PORT', __format = 'json' }
+password = 'APP_REDIS_PASSWORD'
 keyPrefix = 'APP_REDIS_KEY_PREFIX'
 
 [mysql]

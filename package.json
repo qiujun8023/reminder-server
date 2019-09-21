@@ -1,8 +1,8 @@
 {
   "name": "reminder-server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "reminder server",
+  "author": "qiujun",
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
@@ -32,15 +32,14 @@
     "cookie-parser": "^1.4.4",
     "express-session": "^1.16.2",
     "ioredis": "^4.14.0",
-    "luxon": "^1.17.2",
+    "lodash": "^4.17.15",
     "mysql": "^2.17.1",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
     "swagger-ui-express": "^4.0.7",
     "toml": "^3.0.0",
-    "typeorm": "^0.2.18",
-    "winston": "^3.2.1"
+    "typeorm": "^0.2.19"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",
@@ -50,6 +49,7 @@
     "@types/express-session": "^1.15.14",
     "@types/ioredis": "^4.0.15",
     "@types/jest": "24.0.11",
+    "@types/lodash": "^4.14.138",
     "@types/node": "11.13.4",
     "@types/supertest": "2.0.7",
     "jest": "24.7.1",
@@ -58,7 +58,6 @@
     "ts-jest": "24.0.2",
     "ts-node": "8.1.0",
     "tsc-watch": "2.2.1",
-    "tsconfig-paths": "3.8.0",
     "tslint": "5.16.0",
     "typescript": "3.4.3"
   },

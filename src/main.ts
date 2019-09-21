@@ -5,10 +5,10 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { PackageConfig } from './common/interface/package-config.interface';
-import { ServerConfig } from './common/interface/server-config.interface';
 import { ConfigService } from './common/service/config.service';
 import { RedisService } from './common/service/redis.service';
+import { PackageConfig } from './common/interface/package-config.interface';
+import { ServerConfig } from './common/interface/server-config.interface';
 import { API_BASE_PATH, SWAGGER_TAG_REMINDER, SWAGGER_TAG_WECHAT } from './common/constants';
 
 async function bootstrap() {
