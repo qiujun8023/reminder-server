@@ -4,7 +4,7 @@ node_js:
   - "8"
 
 env:
-  - APP_VERSION=$(npm --loglevel silent run version)
+  - APP_VERSION=$(yarn run -s version)
 
 services:
   - docker
@@ -13,7 +13,7 @@ before_script:
   - docker build -t $DOCKER_REPOSITORY:$APP_VERSION -t $DOCKER_REPOSITORY:latest .
 
 script:
-  - docker run -ti $DOCKER_REPOSITORY npm run lint
+  - docker run -ti $DOCKER_REPOSITORY yarn run lint
 
 before_deploy:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
