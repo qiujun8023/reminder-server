@@ -7,8 +7,8 @@ WORKDIR ${APP_ROOT}
 
 COPY . /app
 
-RUN npm install -q
+RUN yarn
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:prod"]
+CMD ["yarn", "run", "start:prod"]
