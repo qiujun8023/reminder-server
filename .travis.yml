@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - "8"
+  - "10"
 
 env:
   - APP_VERSION=$(yarn run -s version)
@@ -9,14 +9,19 @@ env:
 services:
   - docker
 
-before_script:
-  - docker build -t $DOCKER_REPOSITORY:$APP_VERSION -t $DOCKER_REPOSITORY:latest .
+cache:
+  directories:
+    - node_modules
+
+install:
+  - yarn install
 
 script:
-  - docker run -ti $DOCKER_REPOSITORY yarn run lint
+  - yarn run lint
 
 before_deploy:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t $DOCKER_REPOSITORY:$APP_VERSION -t $DOCKER_REPOSITORY:latest .
 
 deploy:
   - provider: script

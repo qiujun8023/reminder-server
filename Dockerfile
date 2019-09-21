@@ -7,7 +7,7 @@ WORKDIR ${APP_ROOT}
 
 COPY . /app
 
-RUN yarn
+RUN yarn install
 
 EXPOSE 3000
 
