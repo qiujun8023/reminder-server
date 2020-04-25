@@ -31,6 +31,6 @@ module.exports = {
     corpId: process.env.APP_WECHAT_CORP_ID || 'corp id',
     secret: process.env.APP_WECHAT_SECRET || 'secret',
     agentId: Number(process.env.APP_WECHAT_AGENT_ID || 0),
-    bgImage: process.env.APP_WECHAT_BG_IMAGE || 'https://cdn.qiujun.me/image/2018/09/04/06c2d3f70e6fed342e2eb43bce55fb43.png!/both/720x400'
+    bgImage: process.env.APP_WECHAT_BG_IMAGE || 'https://cdn.qiujun.xyz/image/2018/09/04/06c2d3f70e6fed342e2eb43bce55fb43.png!/both/720x400'
   }
 }
