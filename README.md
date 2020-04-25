@@ -9,11 +9,6 @@
 [![Build Status](https://travis-ci.org/qiujun8023/birthday-server.svg?branch=master)](https://travis-ci.org/qiujun8023/birthday-server)
 [![Coverage Status](https://coveralls.io/repos/github/qiujun8023/birthday-server/badge.svg?branch=master)](https://coveralls.io/github/qiujun8023/birthday-server?branch=master)
 
-#### Develop
-
-[![Build Status](https://travis-ci.org/qiujun8023/birthday-server.svg?branch=develop)](https://travis-ci.org/qiujun8023/birthday-server)
-[![Coverage Status](https://coveralls.io/repos/github/qiujun8023/birthday-server/badge.svg?branch=develop)](https://coveralls.io/github/qiujun8023/birthday-server?branch=develop)
-
 ### 特性
 
 - 基于微信企业号/企业微信授权登录
