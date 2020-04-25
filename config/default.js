@@ -24,15 +24,15 @@ module.exports = {
   redis: {
     host: 'localhost', // Redis 地址
     port: 6379, // Redis 端口
-    keyPrefix: 'birthday:' // Redis 前缀，一般不用修改
+    keyPrefix: 'reminder:' // Redis 前缀，一般不用修改
   },
 
   mysql: {
     host: 'localhost', // 数据库地址
     port: 3306, // 数据库端口
-    user: 'birthday', // 数据库用户名
+    user: 'reminder', // 数据库用户名
     password: 'password', // 数据库密码
-    database: 'birthday' // 数据库库名
+    database: 'reminder' // 数据库库名
   },
 
   wechat: {

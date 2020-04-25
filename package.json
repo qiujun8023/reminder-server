@@ -1,5 +1,5 @@
 {
-  "name": "birthday",
+  "name": "reminder",
   "version": "0.4.2",
   "private": true,
   "engines": {
@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qiujun8023/birthday-server.git"
+    "url": "https://github.com/qiujun8023/reminder-server.git"
   },
   "scripts": {
     "dev": "nodemon -e js,yaml src/index.js",

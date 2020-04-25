@@ -5,7 +5,7 @@ module.exports = {
   redis: {
     host: 'localhost',
     port: 6379,
-    keyPrefix: 'birthday:'
+    keyPrefix: 'reminder:'
   },
 
   mysql: {
@@ -13,6 +13,6 @@ module.exports = {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'birthday'
+    database: 'reminder'
   }
 }

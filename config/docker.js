@@ -16,7 +16,7 @@ module.exports = {
   redis: {
     host: process.env.APP_REDIS_HOST || 'redis',
     port: Number(process.env.APP_REDIS_PORT || 6379),
-    keyPrefix: process.env.APP_REDIS_KEY_PREFIX || 'birthday:'
+    keyPrefix: process.env.APP_REDIS_KEY_PREFIX || 'reminder:'
   },
 
   mysql: {
@@ -24,7 +24,7 @@ module.exports = {
     port: Number(process.env.APP_MYSQL_PORT || 3306),
     user: process.env.APP_MYSQL_USER || 'root',
     password: process.env.APP_MYSQL_PASSWORD || 'root',
-    database: process.env.APP_MYSQL_DATABASE || 'birthday'
+    database: process.env.APP_MYSQL_DATABASE || 'reminder'
   },
 
   wechat: {
