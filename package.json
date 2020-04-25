@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qious/birthday-server.git"
+    "url": "https://github.com/qiujun8023/birthday-server.git"
   },
   "scripts": {
     "dev": "nodemon -e js,yaml src/index.js",
@@ -53,6 +53,6 @@
     "sequelize": "^4.37.6",
     "solarlunar": "^2.0.2",
     "sway": "^2.0.5",
-    "wechat-enterprise-api": "git+https://github.com/qious/wechat-enterprise-api.git"
+    "wechat-enterprise-api": "git+https://github.com/qiujun8023/wechat-enterprise-api.git"
   }
 }
