@@ -38,7 +38,7 @@
     "config": "^1.30.0",
     "glob": "^7.1.2",
     "ioredis": "^3.2.2",
-    "js-yaml": "^3.11.0",
+    "js-yaml": "^3.15.2",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-generic-session": "^2.0.1",
